@@ -86,7 +86,7 @@ namespace AgAmuasiBooking.Controllers
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Administrator"));
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, reg.Email));
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
-            await _userManager.AddClaimAsync(user, new Claim("UsersID", user.Id));
+            await _userManager.AddClaimAsync(user, new Claim("UsersID", user.Id.ToString()));
             await _userManager.AddClaimAsync(user, new Claim("FullName", reg.FullName));
             await db.SaveChangesAsync();
             return Accepted(user.Id);
@@ -95,7 +95,7 @@ namespace AgAmuasiBooking.Controllers
         [HttpPost("ChangeRole")]
         public async Task<IActionResult> ChangeRole([FromBody] SetRoleDto role)
         {
-            var user = await _userManager.FindByIdAsync(role.UserId);
+            var user = await _userManager.FindByIdAsync(role.UserId.ToString());
             if (user == null)
                 return NotFound(new { Message = "User not found" });
             var claims = await _userManager.GetClaimsAsync(user);

@@ -28,9 +28,9 @@ namespace AgAmuasiBooking
                 o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), opt =>
                 {
                     opt.UseRelationalNulls(true)
-                       .EnableRetryOnFailure(3);
-                })
-                .UseLowerCaseNamingConvention()
+                       .EnableRetryOnFailure(3)
+                       .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                }).UseLowerCaseNamingConvention()
                 .EnableDetailedErrors(builder.Environment.IsDevelopment())
                 .EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
             });
@@ -41,7 +41,7 @@ namespace AgAmuasiBooking
                 o.InstanceName = "booking_";
             });
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(x =>
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(x =>
             {
                 x.SignIn.RequireConfirmedAccount = false;
                 x.Password.RequiredLength = 8;

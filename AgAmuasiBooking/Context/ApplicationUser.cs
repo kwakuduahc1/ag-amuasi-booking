@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AgAmuasiBooking.Context
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
         [Required]
-        [StringLength(50, MinimumLength = 5)]
+        [StringLength(70, MinimumLength = 5)]
         public override string? Email { get; set; }
 
         [Required]
@@ -32,5 +32,5 @@ namespace AgAmuasiBooking.Context
         public required string FullName { get; set; }
     }
 
-    public record SetRoleDto([Required, StringLength(64, MinimumLength = 32)] string UserId, [Required, StringLength(20, MinimumLength = 10)] string Role);
+    public record SetRoleDto([Required] Guid UserId, [Required, StringLength(70, MinimumLength = 3)] string Role);
 }
