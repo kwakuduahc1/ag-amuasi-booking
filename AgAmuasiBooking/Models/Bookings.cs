@@ -61,8 +61,7 @@ namespace AgAmuasiBooking.Models
         public virtual ICollection<BookingServices>? BookingServices { get; set; }
     }
 
-    [Table("Services")]
-    [Index("ServiceName", IsUnique = true)]
+    [Index(nameof(ServiceName), IsUnique = true)]
     public class Services
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
@@ -72,6 +71,10 @@ namespace AgAmuasiBooking.Models
         [StringLength(50, MinimumLength = 3)]
         public required string ServiceName { get; set; }
 
+        [Required]
+        [DefaultValue(false)]
+        public bool PerPerson { get; set; }
+
         public virtual ICollection<ServiceCosts>? ServiceCosts { get; set; }
 
     }
@@ -80,8 +83,9 @@ namespace AgAmuasiBooking.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
         public int ServiceCostsID { get; set; }
+       
         [Required]
-        public required int ServicesID { get; set; }
+        public int ServicesID { get; set; }
 
         [Required]
         [Range(0, double.MaxValue)]

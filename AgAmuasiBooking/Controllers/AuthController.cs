@@ -15,7 +15,7 @@ namespace AgAmuasiBooking.Controllers
     [ApiController]
     [EnableCors("bStudioApps")]
     [Route("api/[controller]/")]
-    [Authorize(Policy = "Accountant")]
+    [Authorize(Policy = "Administration")]
     public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, DbContextOptions<ApplicationDbContext> contextOptions, IAppFeatures app, CancellationToken token) : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
