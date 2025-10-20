@@ -3,6 +3,7 @@ using System;
 using AgAmuasiBooking.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AgAmuasiBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251019133931_Booker1")]
+    partial class Booker1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,9 +141,9 @@ namespace AgAmuasiBooking.Migrations
                     b.HasKey("BookingServicesID")
                         .HasName("pk_bookingservices");
 
-                    b.HasIndex("BookingsID", "ServiceCostsID");
+                    b.HasIndex("BookingsID");
 
-                    b.HasIndex("ServiceCostsID", "BookingsID");
+                    b.HasIndex("ServiceCostsID");
 
                     b.ToTable("bookingservices", (string)null);
                 });
@@ -156,27 +159,14 @@ namespace AgAmuasiBooking.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("amountpaid");
 
-                    b.Property<string>("Approver")
-                        .HasMaxLength(70)
-                        .HasColumnType("character varying(70)")
-                        .HasColumnName("approver");
-
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("bookingdate");
-
-                    b.Property<DateTime?>("DateCancelled")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("datecancelled");
 
                     b.PrimitiveCollection<DateTime[]>("Dates")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone[]")
                         .HasColumnName("dates");
-
-                    b.Property<short>("Days")
-                        .HasColumnType("smallint")
-                        .HasColumnName("days");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean")
@@ -194,14 +184,6 @@ namespace AgAmuasiBooking.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("isapproved");
 
-                    b.Property<bool>("IsCancelled")
-                        .HasColumnType("boolean")
-                        .HasColumnName("iscancelled");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("boolean")
-                        .HasColumnName("isclosed");
-
                     b.Property<bool>("IsReviewed")
                         .HasColumnType("boolean")
                         .HasColumnName("isreviewed");
@@ -214,11 +196,6 @@ namespace AgAmuasiBooking.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("purpose");
-
-                    b.Property<string>("Receiver")
-                        .HasMaxLength(70)
-                        .HasColumnType("character varying(70)")
-                        .HasColumnName("receiver");
 
                     b.Property<DateTime?>("ReviewedDate")
                         .HasColumnType("timestamp with time zone")
@@ -236,6 +213,10 @@ namespace AgAmuasiBooking.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("title");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("userid");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -244,6 +225,8 @@ namespace AgAmuasiBooking.Migrations
 
                     b.HasKey("BookingsID")
                         .HasName("pk_bookings");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("UserName", "Title");
 
@@ -550,6 +533,16 @@ namespace AgAmuasiBooking.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("ServiceCosts");
+                });
+
+            modelBuilder.Entity("AgAmuasiBooking.Models.Bookings", b =>
+                {
+                    b.HasOne("AgAmuasiBooking.Context.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_bookings_applicationuser_userid");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AgAmuasiBooking.Models.ServiceCosts", b =>

@@ -47,10 +47,15 @@ namespace AgAmuasiBooking.Context
                 }
             }
 
+            //mb.Entity<Bookings>(x =>
+            //{
+            //    x.Property(p=>p.UserName)
+            //})
 
             // Configure Identity table column lengths
             mb.Entity<ApplicationUser>(b =>
             {
+                b.HasAlternateKey(x => x.UserName);
                 b.Property(u => u.UserName).HasMaxLength(70);
                 b.Property(u => u.NormalizedUserName).HasMaxLength(70);
                 b.Property(u => u.Email).HasMaxLength(70);
