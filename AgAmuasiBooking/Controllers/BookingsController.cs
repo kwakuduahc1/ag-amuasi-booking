@@ -1,12 +1,12 @@
 using AgAmuasiBooking.Context;
 using AgAmuasiBooking.Models;
+using AgAmuasiBooking.Models.BookingVm;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 namespace AccountingUltimate.Controllers
@@ -20,12 +20,26 @@ namespace AccountingUltimate.Controllers
     {
         private readonly ApplicationDbContext db = new(dbContextOptions);
 
-        //[HttpGet("MyBookings")]
-        //public async Task<IEnumerable> MyBookings()
-        //{
-        //    using var con = await db.Database.GetDbConnection();
-
-        //}
+        [HttpGet("MyBookings")]
+        public async Task<IActionResult> MyBookings()
+        {
+            var user = User.Identity?.Name;
+            if (string.IsNullOrEmpty(user))
+                return Unauthorized(new { Message = "Invalid credentials" });
+            
+            using var con = db.Database.GetDbConnection();
+            if (con.State != ConnectionState.Open)
+                await con.OpenAsync(token);
+            
+            const string qry =
+                """
+                SELECT bookingsid, bookingdate, title, purpose, dates, guests, isreviewed, isapproved, haspaid, days, bookingservicesid, servicecostsid, cost
+                FROM fn_user_bookings(@user)
+                """;
+            var bookings = await con.QueryAsync<UserBookingDto>(qry, new { user });
+           
+            return Ok(bookings);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Booking([FromBody] AddBookingDto booking)
@@ -144,7 +158,7 @@ namespace AccountingUltimate.Controllers
 
 
         [HttpPut("Payment")]
-        public async Task<IActionResult> Payment([FromBody] int id)
+        public async Task<IActionResult> Payment([FromBody] Guid id)
         {
             var booking = await db.Bookings.FindAsync(id, token);
             if (booking == null)
@@ -164,26 +178,26 @@ namespace AccountingUltimate.Controllers
             const string qry = """
                 SELECT bookingsid
                 FROM bookings
-                WHERE bookingsid IN @events
+                WHERE bookingsid = ANY(@events)
                 """;
             using var con = db.Database.GetDbConnection();
             if (con.State != ConnectionState.Open)
                 await con.OpenAsync(token);
-            var evs = await con.QueryAsync<Guid[]>(qry, new { events });
+            var evs = await con.QueryAsync<Guid>(qry, new { events });
             if (evs == null || !evs.Any())
-                return NotFound(new { Messag = "No events have passed" });
+                return NotFound(new { Messag = "No events are due" });
             const string closeQry =
                 """
                     UPDATE bookings
                     SET isclosed = true
-                    WHERE bookings IN @events
+                    WHERE bookings = ANY(@evs)
                 """;
             var res = await con.ExecuteAsync(closeQry, new { evs });
             return Accepted();
         }
 
         [HttpDelete("{id:required:guid}")]
-        public async Task<IActionResult> Delete([FromBody] Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var booking = await db.Bookings.FindAsync(id, token);
             if (booking is null)

@@ -15,3 +15,4 @@ LEFT JOIN (
 	) s ON s.servicecostsid = bs.servicecostsid
 WHERE s.rn = 1 AND b.deleted = FALSE AND b.username = id;
 $$
+
