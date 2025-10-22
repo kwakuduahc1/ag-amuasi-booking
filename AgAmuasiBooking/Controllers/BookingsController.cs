@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace AccountingUltimate.Controllers
+namespace AgAmuasiBooking.Controllers
 {
     [Route("api/[controller]/")]
     [ApiController]
     [EnableCors("bStudioApps")]
-    //[Authorize(Policy = "Manager")]
+    [Authorize(Policy = "Manager")]
     [Authorize(Policy = "Administration")]
     public class BookingsController(DbContextOptions<ApplicationDbContext> dbContextOptions, CancellationToken token) : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace AccountingUltimate.Controllers
             
             const string qry =
                 """
-                SELECT bookingsid, bookingdate, title, purpose, dates, guests, isreviewed, isapproved, haspaid, days, bookingservicesid, servicecostsid, cost
+                SELECT bookingsid, bookingdate, title, purpose, dates, guests, isreviewed, isapproved, haspaid, days, bookingservicesid, servicecostsid, "cost"
                 FROM fn_user_bookings(@user)
                 """;
             var bookings = await con.QueryAsync<UserBookingDto>(qry, new { user });

@@ -83,7 +83,7 @@ namespace AgAmuasiBooking
                 // Add Authorization Policies
                 .AddPolicy("Users", policy => policy.RequireRole("User"))
                 // Add Authorization Policies
-                .AddPolicy("Administration", policy => policy.RequireRole(["Administrator", "Developer"]))
+                .AddPolicy("Administration", policy => policy.RequireRole(["Administrator", "Developer", "Management"]))
                 // Add Authorization Policies
                 .AddPolicy("Management", policy =>
                     policy.RequireRole(["Manager", "Administrator", "Developer"])
