@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class StatusProvider {
-  private roles = signal<string[] | string>([]);
+  roles = signal<string[] | string>([]);
   user = signal<IUsers | null>(null);
   private snack = inject(MatSnackBar);
   private jwt = inject(JwtHelperService);
   private http = inject(LoginHttpService);
-  router = inject(Router);
+  private router = inject(Router);
 
   private token = signal<string | null>(null);
 
@@ -30,7 +30,6 @@ export class StatusProvider {
   readonly getHeader = computed(() => `Bearer ${this.token()}`);
 
   constructor() {
-    console.log('StatusProvider initialized');
     if (typeof localStorage === 'undefined') return;
     let jwt: any = localStorage.getItem('jwt');
     if (jwt) {
@@ -38,6 +37,10 @@ export class StatusProvider {
       let tkn = this.jwt.decodeToken(jwt);
       if (!this.jwt.isTokenExpired(jwt)) {
         this.setCreds(tkn);
+      }
+      else {
+        this.snack.open('Session has expired, please log in again', 'Ok');
+        this.logout();
       }
     }
     else this.logout(true);
@@ -64,7 +67,6 @@ export class StatusProvider {
   }
 
   login(login: LoginVm) {
-    this.snack.open("Please wait", 'Dismiss', { panelClass: 'snackbar-info-light' });
     return this.http.login(login).pipe(
       map(x => x.token),
       tap((x => this.token.set(x))),

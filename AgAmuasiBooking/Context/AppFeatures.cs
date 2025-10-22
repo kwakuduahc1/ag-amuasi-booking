@@ -39,23 +39,12 @@
                 Key = con.Key;
                 Audience = con.Audience;
                 Issuer = con.Issuer;
-                Expiry = date.AddHours(Hours);
+                Expiry = date.AddDays(con.Hours);
                 Hours = con.Hours;
             }
             else throw new Exception("Application features were not found in the store");
         }
     }
 
-    public class AppModel
-    {
-        public required string AppName { get; set; }
-
-        public required string Key { get; set; }
-
-        public required string Audience { get; set; }
-
-        public required string Issuer { get; set; }
-
-        public required byte Hours { get; set; }
-    }
+    public record AppModel(string AppName, string Key, string Audience, string Issuer, byte Hours);
 }
