@@ -32,19 +32,7 @@ import { environment } from '../../environments/environment';
     standalone: true
 })
 export class NavBarComponent {
-    links: Array<{ link: string, display: string, icon: string }> = [
-        { icon: 'library_books', link: 'records/list', display: 'Records' },
-        // { icon: 'account_circle', link: 'opd', display: 'OPD' },
-        { icon: 'attach_money', link: 'accounts/search', display: 'Accounts' },
-        { icon: 'record_voice_over', link: 'consult', display: 'Consulting' },
-        { icon: 'biotech', link: 'labs/home', display: 'Laboratory' },
-        { icon: 'pending_actions', link: 'dispensary/list', display: 'Dispensary' },
-        { icon: 'medical_services', link: 'services/list', display: 'Services' },
-        { icon: 'admin_panel_settings', link: 'administration/home', display: 'Administration' },
-        { icon: 'shopping_cart', link: 'stores/items', display: 'Stores' },
-        // { icon: 'money', link: 'expenditure', display: 'Expenditure' },
-        { icon: 'business', link: 'management', display: 'Management' }
-    ];
+
     bpo = inject(BreakpointObserver);
     env = environment;
     iconName = 'api';

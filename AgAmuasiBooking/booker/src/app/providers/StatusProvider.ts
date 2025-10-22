@@ -1,4 +1,4 @@
-import { Injectable, Signal, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginHttpService } from '../http/login-http-service';
 import { IUsers, LoginVm } from '../models/IUsers';
@@ -30,6 +30,7 @@ export class StatusProvider {
   readonly getHeader = computed(() => `Bearer ${this.token()}`);
 
   constructor() {
+    console.log('StatusProvider initialized');
     if (typeof localStorage === 'undefined') return;
     let jwt: any = localStorage.getItem('jwt');
     if (jwt) {

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDivider } from '@angular/material/divider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-services-list-component',
@@ -7,5 +10,7 @@ import { Component } from '@angular/core';
   styleUrl: './services-list-component.scss'
 })
 export class ServicesListComponent {
-
+  protected services = model();
+  private diag = inject(MatDialog);
+  private snack = inject(MatSnackBar);
 }

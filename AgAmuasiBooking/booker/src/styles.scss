@@ -1,39 +1,271 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// Import Angular Material
 @use '@angular/material' as mat;
 
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
+// Import the custom AgAmuasi theme
+@import 'theme';
 
+// Include the custom theme with Angular Material using new API
+@include mat.theme($ag-amuasi-theme);
+
+// Global application styles using custom theme variables
+html,
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
+  height: 100%;
   margin: 0;
+  font-family: var(--ag-font-family-primary);
+  background-color: var(--ag-bg-primary);
+  color: var(--ag-text-primary);
+  line-height: var(--ag-leading-normal);
 }
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// Dark theme support
+body.dark-theme {
+  @include mat.theme($ag-amuasi-dark-theme);
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ag-bg-secondary);
+  border-radius: var(--ag-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ag-gray-400);
+  border-radius: var(--ag-radius-sm);
+
+  &:hover {
+    background: var(--ag-gray-500);
+  }
+}
+
+// Focus styles
+*:focus {
+  outline: 2px solid var(--ag-primary-color);
+  outline-offset: 2px;
+}
+
+// Selection styles
+::selection {
+  background-color: var(--ag-primary-light);
+  color: var(--ag-text-on-primary);
+}
+
+// Remove default button styles
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+// Link styles
+a {
+  color: var(--ag-primary-color);
+  text-decoration: none;
+  transition: color var(--ag-transition-fast);
+
+  &:hover {
+    color: var(--ag-primary-dark);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: var(--ag-primary-dark);
+  }
+}
+
+// Form element enhancements
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: var(--ag-font-size-base);
+  border: 1px solid var(--ag-border-color);
+  border-radius: var(--ag-radius-sm);
+  padding: var(--ag-spacing-sm);
+  transition: border-color var(--ag-transition-fast);
+
+  &:focus {
+    border-color: var(--ag-primary-color);
+  }
+
+  &:disabled {
+    background-color: var(--ag-bg-secondary);
+    color: var(--ag-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+// Utility classes for common patterns
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--ag-spacing-md);
+}
+
+.flex {
+  display: flex;
+
+  &.center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: var(--ag-spacing-md);
+}
+
+.text {
+  &-center {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+
+  &-primary {
+    color: var(--ag-text-primary);
+  }
+
+  &-secondary {
+    color: var(--ag-text-secondary);
+  }
+
+  &-disabled {
+    color: var(--ag-text-disabled);
+  }
+
+  &-xs {
+    font-size: var(--ag-font-size-xs);
+  }
+
+  &-sm {
+    font-size: var(--ag-font-size-sm);
+  }
+
+  &-base {
+    font-size: var(--ag-font-size-base);
+  }
+
+  &-lg {
+    font-size: var(--ag-font-size-lg);
+  }
+
+  &-xl {
+    font-size: var(--ag-font-size-xl);
+  }
+
+  &-light {
+    font-weight: var(--ag-font-weight-light);
+  }
+
+  &-normal {
+    font-weight: var(--ag-font-weight-normal);
+  }
+
+  &-medium {
+    font-weight: var(--ag-font-weight-medium);
+  }
+
+  &-semibold {
+    font-weight: var(--ag-font-weight-semibold);
+  }
+
+  &-bold {
+    font-weight: var(--ag-font-weight-bold);
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Animation classes
+.fade-in {
+  animation: fadeIn var(--ag-transition-normal) ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp var(--ag-transition-normal) ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Print styles
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  @page {
+    margin: 0.5in;
+  }
+}
+
+/* Import tables styles */
+@import 'tables';

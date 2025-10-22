@@ -1,52 +1,56 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+<mat-sidenav-container class="ag-sidenav-container">
+    <mat-sidenav #drawer class="ag-sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <a routerLink="home">
-            <mat-toolbar>Home</mat-toolbar>
+        <a routerLink="home" class="ag-sidenav-brand">
+            <mat-toolbar color="primary" class="ag-sidenav-header">
+                <mat-icon class="ag-brand-icon">home</mat-icon>
+                <span class="ag-brand-text">Home</span>
+            </mat-toolbar>
         </a>
-        <mat-nav-list>
+        <mat-nav-list class="ag-nav-list">
             @if (status.isLoggedIn()) {
-            <a mat-list-item [routerLink]="['/reservations']">
-                <mat-icon matListIcon>person</mat-icon>
-                <span matLine>{{status.user()?.fullName}}</span>
+            <a mat-list-item [routerLink]="['/reservations']" class="ag-nav-item ag-user-profile">
+                <mat-icon matListIcon class="ag-nav-icon ag-user-icon">person</mat-icon>
+                <span matLine class="ag-user-name">{{status.user()?.fullName}}</span>
             </a>
-            <a mat-list-item [routerLink]="['/reservations']">
-                <mat-icon matListIcon>book_online</mat-icon>
-                <span matLine>Reservations</span>
+            <a mat-list-item [routerLink]="['/reservations']" class="ag-nav-item">
+                <mat-icon matListIcon class="ag-nav-icon">book_online</mat-icon>
+                <span matLine class="ag-nav-text">Reservations</span>
             </a>
 
-            <a mat-list-item [routerLink]="['/services']">
-                <mat-icon matListIcon>list</mat-icon>
-                <span matLine>Services</span>
+            <a mat-list-item [routerLink]="['/services']" class="ag-nav-item">
+                <mat-icon matListIcon class="ag-nav-icon">list</mat-icon>
+                <span matLine class="ag-nav-text">Services</span>
             </a>
             }
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="accent">
-            @if (isHandset$ |async;) {
-            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    <mat-sidenav-content class="ag-main-content">
+        <mat-toolbar color="primary" class="ag-toolbar">
+            @if (isHandset$ | async) {
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+                class="ag-menu-button">
+                <mat-icon aria-label="Side nav toggle icon" class="ag-menu-icon">menu</mat-icon>
             </button>
             }
-            <span class="app-title">
-                <a [routerLink]="['/home']">{{env.AppName}}</a>
+            <span class="ag-app-title">
+                <a [routerLink]="['/home']" class="ag-app-link">
+                    <span class="ag-app-name">{{env.AppName}}</span>
+                </a>
             </span>
-            <span class="example-spacer"></span>
+            <span class="ag-spacer"></span>
             @if (!status.isLoggedIn()) {
-            <button type="button" [routerLink]='["/auth/login"]' mat-icon-button class="example-icon"
-                aria-label="Example icon-button with share icon">
-                <span class="material-icons">
-                    login
-                </span>
+            <button type="button" [routerLink]='["/auth/login"]' mat-icon-button class="ag-auth-button ag-login-button"
+                aria-label="Login to your account">
+                <mat-icon class="ag-auth-icon">login</mat-icon>
+                <span class="ag-button-text">Login</span>
             </button>
             }
             @if (status.isLoggedIn()) {
-            <button type="button" (click)="logout()" mat-icon-button class="example-icon"
-                aria-label="Example icon-button with share icon">
-                <span class="material-icons">
-                    logout
-                </span>
+            <button type="button" (click)="logout()" mat-icon-button class="ag-auth-button ag-logout-button"
+                aria-label="Logout from your account">
+                <mat-icon class="ag-auth-icon">logout</mat-icon>
+                <span class="ag-button-text">Logout</span>
             </button>
             }
         </mat-toolbar>

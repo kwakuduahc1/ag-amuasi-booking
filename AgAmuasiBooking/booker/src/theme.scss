@@ -1,0 +1,396 @@
+// AgAmuasi Booking Theme Configuration
+// This file contains theme definitions for the booking application
+// Including Angular Material theming and custom CSS variables
+
+@use '@angular/material' as mat;
+
+// Create Angular Material theme using Material 3 API
+$ag-amuasi-theme: mat.define-theme((color: (theme-type: light,
+                primary: mat.$green-palette,
+                tertiary: mat.$orange-palette,
+            ),
+            typography: (brand-family: 'Roboto, "Helvetica Neue", sans-serif',
+                plain-family: 'Roboto, "Helvetica Neue", sans-serif',
+            ),
+            density: (scale: 0,
+            )));
+
+// Dark theme
+$ag-amuasi-dark-theme: mat.define-theme((color: (theme-type: dark,
+                primary: mat.$green-palette,
+                tertiary: mat.$orange-palette,
+            ),
+            typography: (brand-family: 'Roboto, "Helvetica Neue", sans-serif',
+                plain-family: 'Roboto, "Helvetica Neue", sans-serif',
+            ),
+            density: (scale: 0,
+            )));
+
+// Custom CSS Variables for the application
+:root {
+    // Color palette
+    --ag-primary-color: #04A0CC;
+    --ag-primary-light: #4AC4E0;
+    --ag-primary-dark: #027A9B;
+    --ag-accent-color: #ff9800;
+    --ag-accent-light: #ffcc80;
+    --ag-accent-dark: #e65100;
+    --ag-warn-color: #f44336;
+    --ag-warn-light: #ef9a9a;
+    --ag-warn-dark: #b71c1c;
+
+    // Neutral colors
+    --ag-white: #ffffff;
+    --ag-black: #000000;
+    --ag-gray-50: #fafafa;
+    --ag-gray-100: #f5f5f5;
+    --ag-gray-200: #eeeeee;
+    --ag-gray-300: #e0e0e0;
+    --ag-gray-400: #bdbdbd;
+    --ag-gray-500: #9e9e9e;
+    --ag-gray-600: #757575;
+    --ag-gray-700: #616161;
+    --ag-gray-800: #424242;
+    --ag-gray-900: #212121;
+
+    // Semantic colors
+    --ag-success-color: #4caf50;
+    --ag-info-color: #2196f3;
+    --ag-warning-color: #ff9800;
+    --ag-error-color: #f44336;
+
+    // Background colors
+    --ag-bg-primary: var(--ag-white);
+    --ag-bg-secondary: var(--ag-gray-50);
+    --ag-bg-accent: var(--ag-gray-100);
+    --ag-bg-card: var(--ag-white);
+    --ag-bg-overlay: rgba(0, 0, 0, 0.32);
+
+    // Text colors
+    --ag-text-primary: var(--ag-gray-900);
+    --ag-text-secondary: var(--ag-gray-600);
+    --ag-text-disabled: var(--ag-gray-400);
+    --ag-text-hint: var(--ag-gray-500);
+    --ag-text-on-primary: var(--ag-white);
+    --ag-text-on-accent: var(--ag-black);
+
+    // Border colors
+    --ag-border-color: var(--ag-gray-300);
+    --ag-border-light: var(--ag-gray-200);
+    --ag-border-dark: var(--ag-gray-400);
+
+    // Shadows
+    --ag-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --ag-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --ag-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --ag-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    --ag-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+    // Spacing
+    --ag-spacing-xs: 4px;
+    --ag-spacing-sm: 8px;
+    --ag-spacing-md: 16px;
+    --ag-spacing-lg: 24px;
+    --ag-spacing-xl: 32px;
+    --ag-spacing-xxl: 48px;
+
+    // Border radius
+    --ag-radius-sm: 4px;
+    --ag-radius-md: 8px;
+    --ag-radius-lg: 12px;
+    --ag-radius-xl: 16px;
+    --ag-radius-full: 50%;
+
+    // Typography
+    --ag-font-family-primary: 'Roboto, "Helvetica Neue", sans-serif';
+    --ag-font-family-secondary: 'Roboto, "Helvetica Neue", sans-serif';
+    --ag-font-size-xs: 0.75rem; // 12px
+    --ag-font-size-sm: 0.875rem; // 14px
+    --ag-font-size-base: 1rem; // 16px
+    --ag-font-size-lg: 1.125rem; // 18px
+    --ag-font-size-xl: 1.25rem; // 20px
+    --ag-font-size-2xl: 1.5rem; // 24px
+    --ag-font-size-3xl: 1.875rem; // 30px
+    --ag-font-size-4xl: 2.25rem; // 36px
+
+    // Line heights
+    --ag-leading-none: 1;
+    --ag-leading-tight: 1.25;
+    --ag-leading-snug: 1.375;
+    --ag-leading-normal: 1.5;
+    --ag-leading-relaxed: 1.625;
+    --ag-leading-loose: 2;
+
+    // Font weights
+    --ag-font-weight-light: 300;
+    --ag-font-weight-normal: 400;
+    --ag-font-weight-medium: 500;
+    --ag-font-weight-semibold: 600;
+    --ag-font-weight-bold: 700;
+
+    // Z-index
+    --ag-z-dropdown: 1000;
+    --ag-z-sticky: 1020;
+    --ag-z-fixed: 1030;
+    --ag-z-modal-backdrop: 1040;
+    --ag-z-modal: 1050;
+    --ag-z-popover: 1060;
+    --ag-z-tooltip: 1070;
+
+    // Animation/Transition
+    --ag-transition-fast: 150ms ease-in-out;
+    --ag-transition-normal: 300ms ease-in-out;
+    --ag-transition-slow: 500ms ease-in-out;
+
+    // Booking-specific colors
+    --ag-booking-available: #4caf50;
+    --ag-booking-pending: #ff9800;
+    --ag-booking-confirmed: var(--ag-primary-color);
+    --ag-booking-cancelled: #f44336;
+    --ag-booking-completed: #9c27b0;
+
+    // Table-specific measurements
+    --ag-table-border-width: 1px;
+    --ag-table-border-width-thick: 2px;
+    --ag-table-border-width-extra-thick: 3px;
+    --ag-table-header-height: 2px;
+    --ag-table-scrollbar-height: 8px;
+    --ag-table-min-width: 600px;
+    --ag-table-spinner-size: 40px;
+    --ag-table-spinner-border-width: 4px;
+    --ag-table-mobile-breakpoint: 768px;
+
+    // Table layout percentages
+    --ag-table-mobile-padding-left: 50%;
+    --ag-table-mobile-label-width: 45%;
+
+    // Table transforms
+    --ag-table-hover-translate: -1px;
+    --ag-table-mobile-hover-translate: -2px;
+
+    // Table letter spacing
+    --ag-table-letter-spacing: 0.5px;
+}
+
+// Dark theme variables
+[data-theme="dark"] {
+    --ag-bg-primary: var(--ag-gray-900);
+    --ag-bg-secondary: var(--ag-gray-800);
+    --ag-bg-accent: var(--ag-gray-700);
+    --ag-bg-card: var(--ag-gray-800);
+    --ag-bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --ag-text-primary: var(--ag-gray-100);
+    --ag-text-secondary: var(--ag-gray-300);
+    --ag-text-disabled: var(--ag-gray-500);
+    --ag-text-hint: var(--ag-gray-400);
+    --ag-text-on-primary: var(--ag-white);
+    --ag-text-on-accent: var(--ag-white);
+
+    --ag-border-color: var(--ag-gray-600);
+    --ag-border-light: var(--ag-gray-700);
+    --ag-border-dark: var(--ag-gray-500);
+}
+
+// Theme utility classes
+.theme-primary {
+    background-color: var(--ag-primary-color);
+    color: var(--ag-text-on-primary);
+}
+
+.theme-accent {
+    background-color: var(--ag-accent-color);
+    color: var(--ag-text-on-accent);
+}
+
+.theme-warn {
+    background-color: var(--ag-warn-color);
+    color: var(--ag-text-on-primary);
+}
+
+.theme-success {
+    background-color: var(--ag-success-color);
+    color: var(--ag-text-on-primary);
+}
+
+.theme-info {
+    background-color: var(--ag-info-color);
+    color: var(--ag-text-on-primary);
+}
+
+.theme-warning {
+    background-color: var(--ag-warning-color);
+    color: var(--ag-text-on-primary);
+}
+
+.theme-error {
+    background-color: var(--ag-error-color);
+    color: var(--ag-text-on-primary);
+}
+
+// Booking status utility classes
+.booking-status {
+    &.available {
+        background-color: var(--ag-booking-available);
+        color: var(--ag-white);
+    }
+
+    &.pending {
+        background-color: var(--ag-booking-pending);
+        color: var(--ag-white);
+    }
+
+    &.confirmed {
+        background-color: var(--ag-booking-confirmed);
+        color: var(--ag-white);
+    }
+
+    &.cancelled {
+        background-color: var(--ag-booking-cancelled);
+        color: var(--ag-white);
+    }
+
+    &.completed {
+        background-color: var(--ag-booking-completed);
+        color: var(--ag-white);
+    }
+}
+
+// Spacing utility classes
+.spacing {
+    &-xs {
+        margin: var(--ag-spacing-xs);
+    }
+
+    &-sm {
+        margin: var(--ag-spacing-sm);
+    }
+
+    &-md {
+        margin: var(--ag-spacing-md);
+    }
+
+    &-lg {
+        margin: var(--ag-spacing-lg);
+    }
+
+    &-xl {
+        margin: var(--ag-spacing-xl);
+    }
+
+    &-xxl {
+        margin: var(--ag-spacing-xxl);
+    }
+}
+
+.padding {
+    &-xs {
+        padding: var(--ag-spacing-xs);
+    }
+
+    &-sm {
+        padding: var(--ag-spacing-sm);
+    }
+
+    &-md {
+        padding: var(--ag-spacing-md);
+    }
+
+    &-lg {
+        padding: var(--ag-spacing-lg);
+    }
+
+    &-xl {
+        padding: var(--ag-spacing-xl);
+    }
+
+    &-xxl {
+        padding: var(--ag-spacing-xxl);
+    }
+}
+
+// Card styles
+.ag-card {
+    background-color: var(--ag-bg-card);
+    border-radius: var(--ag-radius-md);
+    box-shadow: var(--ag-shadow-1);
+    padding: var(--ag-spacing-lg);
+    transition: box-shadow var(--ag-transition-normal);
+
+    &:hover {
+        box-shadow: var(--ag-shadow-2);
+    }
+
+    &.elevated {
+        box-shadow: var(--ag-shadow-3);
+    }
+}
+
+// Button enhancements
+.ag-button {
+    border-radius: var(--ag-radius-sm);
+    padding: var(--ag-spacing-sm) var(--ag-spacing-md);
+    font-weight: var(--ag-font-weight-medium);
+    transition: all var(--ag-transition-fast);
+    border: none;
+    cursor: pointer;
+
+    &.primary {
+        background-color: var(--ag-primary-color);
+        color: var(--ag-text-on-primary);
+
+        &:hover {
+            background-color: var(--ag-primary-dark);
+        }
+    }
+
+    &.accent {
+        background-color: var(--ag-accent-color);
+        color: var(--ag-text-on-accent);
+
+        &:hover {
+            background-color: var(--ag-accent-dark);
+        }
+    }
+
+    &.outline {
+        background-color: transparent;
+        border: 1px solid var(--ag-border-color);
+        color: var(--ag-text-primary);
+
+        &:hover {
+            background-color: var(--ag-bg-accent);
+        }
+    }
+}
+
+// Loading states
+.ag-loading {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--ag-bg-overlay);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: inherit;
+    }
+}
+
+// Responsive breakpoints
+@media (max-width: 576px) {
+    :root {
+        --ag-spacing-xs: 2px;
+        --ag-spacing-sm: 4px;
+        --ag-spacing-md: 8px;
+        --ag-spacing-lg: 16px;
+        --ag-spacing-xl: 24px;
+        --ag-spacing-xxl: 32px;
+    }
+}

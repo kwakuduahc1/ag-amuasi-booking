@@ -1,56 +1,273 @@
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
+// AgAmuasi Navbar Component Styles
+// Using theme variables from styles.scss
+
+// Sidenav Container
+.ag-sidenav-container {
+    height: 100vh;
+    background-color: var(--ag-bg-primary);
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+// Sidenav Styles
+.ag-sidenav {
+    width: 240px;
+    background-color: var(--ag-bg-card);
+    box-shadow: var(--ag-shadow-3);
+    border-right: var(--ag-table-border-width) solid var(--ag-border-light);
+
+    .ag-sidenav-brand {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+
+        &:hover {
+            background-color: var(--ag-bg-accent);
+        }
+    }
+
+    .ag-sidenav-header {
+        background: linear-gradient(135deg, var(--ag-primary-color), var(--ag-primary-dark));
+        color: var(--ag-text-on-primary);
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        padding: 0 var(--ag-spacing-lg);
+        box-shadow: var(--ag-shadow-2);
+
+        .ag-brand-icon {
+            font-size: var(--ag-font-size-2xl);
+            margin-right: var(--ag-spacing-md);
+            color: var(--ag-accent-color);
+        }
+
+        .ag-brand-text {
+            font-size: var(--ag-font-size-xl);
+            font-weight: var(--ag-font-weight-semibold);
+            letter-spacing: var(--ag-table-letter-spacing);
+        }
+    }
 }
 
-.spacer {
-    flex: 1 1 auto;
+// Navigation List
+.ag-nav-list {
+    padding-top: var(--ag-spacing-md);
+
+    .ag-nav-item {
+        margin: var(--ag-spacing-xs) var(--ag-spacing-md);
+        border-radius: var(--ag-radius-md);
+        transition: all var(--ag-transition-fast);
+        color: var(--ag-text-primary);
+
+        &:hover {
+            background-color: var(--ag-bg-accent);
+            transform: translateX(var(--ag-spacing-xs));
+            box-shadow: var(--ag-shadow-1);
+        }
+
+        &.ag-user-profile {
+            background: linear-gradient(135deg, var(--ag-primary-light), var(--ag-primary-color));
+            color: var(--ag-text-on-primary);
+            margin-bottom: var(--ag-spacing-lg);
+
+            .ag-user-name {
+                font-weight: var(--ag-font-weight-semibold);
+                font-size: var(--ag-font-size-base);
+                transform: translateY(-1px);
+            }
+
+            .ag-user-icon {
+                color: var(--ag-accent-color);
+            }
+
+            &:hover {
+                background: linear-gradient(135deg, var(--ag-primary-color), var(--ag-primary-dark));
+                transform: translateX(var(--ag-spacing-sm));
+            }
+        }
+
+        .ag-nav-icon {
+            color: var(--ag-primary-color);
+            font-size: var(--ag-font-size-lg);
+            vertical-align: middle;
+        }
+
+        .ag-nav-text {
+            font-weight: var(--ag-font-weight-medium);
+            color: var(--ag-text-primary);
+            vertical-align: middle;
+            transform: translateY(-2px);
+        }
+
+        // Ensure proper alignment with Material's structure
+        .mdc-list-item__content {
+            align-items: center;
+        }
+
+        .mdc-list-item__primary-text {
+            align-items: center;
+            display: flex;
+        }
+    }
 }
 
-.user-fullname {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #fff;
-    background: #1976d2;
-    padding: 0.35em 1em;
-    border-radius: 20px;
-    margin-right: 1rem;
-    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
-    letter-spacing: 0.5px;
-    transition: background 0.2s;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
+// Main Content Area
+.ag-main-content {
+    background-color: var(--ag-bg-primary);
 }
 
-button[mat-button] {
-    margin-left: 1rem;
-    display: flex;
-    align-items: center;
+// Toolbar Styles
+.ag-toolbar {
+    background: linear-gradient(90deg, var(--ag-primary-color), var(--ag-primary-dark));
+    color: var(--ag-text-on-primary);
+    box-shadow: var(--ag-shadow-2);
+    min-height: 64px;
+    padding: 0 var(--ag-spacing-lg);
+
+    .ag-menu-button {
+        margin-right: var(--ag-spacing-md);
+        color: var(--ag-text-on-primary);
+
+        .ag-menu-icon {
+            font-size: var(--ag-font-size-2xl);
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .ag-app-title {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+
+        .ag-app-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all var(--ag-transition-fast);
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            .ag-app-icon {
+                font-size: var(--ag-font-size-2xl);
+                margin-right: var(--ag-spacing-md);
+                color: var(--ag-accent-color);
+            }
+
+            .ag-app-name {
+                font-size: var(--ag-font-size-xl);
+                font-weight: var(--ag-font-weight-bold);
+                letter-spacing: var(--ag-table-letter-spacing);
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .ag-spacer {
+        flex: 1 1 auto;
+    }
+
+    .ag-auth-button {
+        color: var(--ag-text-on-primary);
+        margin-left: var(--ag-spacing-sm);
+        border-radius: var(--ag-radius-md);
+        transition: all var(--ag-transition-fast);
+        padding: var(--ag-spacing-sm);
+
+        .ag-auth-icon {
+            font-size: var(--ag-font-size-lg);
+            margin-right: var(--ag-spacing-xs);
+        }
+
+        .ag-button-text {
+            font-size: var(--ag-font-size-sm);
+            font-weight: var(--ag-font-weight-medium);
+            display: none; // Hidden on mobile, shown on larger screens
+        }
+
+        &.ag-login-button {
+            background-color: var(--ag-accent-color);
+
+            &:hover {
+                background-color: var(--ag-accent-dark);
+                transform: translateY(calc(-1 * var(--ag-table-hover-translate)));
+                box-shadow: var(--ag-shadow-2);
+            }
+        }
+
+        &.ag-logout-button {
+            background-color: var(--ag-warn-color);
+
+            &:hover {
+                background-color: var(--ag-warn-dark);
+                transform: translateY(calc(-1 * var(--ag-table-hover-translate)));
+                box-shadow: var(--ag-shadow-2);
+            }
+        }
+    }
 }
 
-.mat-icon {
-    margin-right: 4px;
-    font-size: 20px;
-    height: 20px;
-    width: 20px;
-    vertical-align: middle;
+// Responsive Design
+@media (min-width: var(--ag-table-mobile-breakpoint)) {
+    .ag-auth-button .ag-button-text {
+        display: inline; // Show button text on larger screens
+    }
+
+    .ag-toolbar .ag-auth-button {
+        padding: var(--ag-spacing-sm) var(--ag-spacing-md);
+    }
 }
 
-.dropdown-icon {
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
-    margin-left: 2px;
-    margin-right: 0;
+// Dark theme support
+[data-theme="dark"] {
+    .ag-sidenav {
+        background-color: var(--ag-bg-card);
+        border-right-color: var(--ag-border-color);
+    }
+
+    .ag-nav-item:hover {
+        background-color: var(--ag-gray-700);
+    }
+
+    .ag-toolbar .ag-menu-button:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+// Focus states for accessibility
+.ag-nav-item:focus,
+.ag-auth-button:focus,
+.ag-menu-button:focus {
+    outline: 2px solid var(--ag-accent-color);
+    outline-offset: 2px;
+}
+
+// Loading and disabled states
+.ag-nav-item.disabled,
+.ag-auth-button.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+// Animation for smooth transitions
+.ag-nav-item,
+.ag-auth-button,
+.ag-app-link {
+    transition: all var(--ag-transition-fast);
+}
+
+// Custom Material Design overrides
+mat-toolbar {
+    &.ag-toolbar {
+        padding: 0 !important;
+    }
+}
+
+mat-sidenav {
+    &.ag-sidenav {
+        border: none !important;
+    }
 }

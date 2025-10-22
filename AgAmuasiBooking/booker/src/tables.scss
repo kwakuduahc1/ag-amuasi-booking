@@ -1,0 +1,427 @@
+// Generate a css file for tables
+// should collapse on small displays and use the data-label attribute for headers
+// Styled using AgAmuasi theme variables
+
+// Base table styles
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--ag-spacing-lg) 0;
+    font-size: var(--ag-font-size-sm);
+    font-family: var(--ag-font-family-primary);
+    box-shadow: var(--ag-shadow-2);
+    border-radius: var(--ag-radius-lg);
+    overflow: hidden;
+    background-color: var(--ag-bg-card);
+    color: var(--ag-text-primary);
+
+    th,
+    td {
+        padding: var(--ag-spacing-md) var(--ag-spacing-lg);
+        text-align: left;
+        border-bottom: var(--ag-table-border-width) solid var(--ag-border-light);
+        transition: background-color var(--ag-transition-fast);
+    }
+
+    th {
+        background-color: var(--ag-primary-color);
+        color: var(--ag-text-on-primary);
+        font-weight: var(--ag-font-weight-semibold);
+        text-transform: uppercase;
+        font-size: var(--ag-font-size-xs);
+        letter-spacing: var(--ag-table-letter-spacing);
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--ag-table-header-height);
+            background: linear-gradient(90deg, var(--ag-primary-dark), var(--ag-accent-color));
+        }
+    }
+
+    tr {
+        border-bottom: var(--ag-table-border-width) solid var(--ag-border-light);
+        transition: all var(--ag-transition-fast);
+
+        &:hover {
+            background-color: var(--ag-bg-accent);
+            transform: translateY(var(--ag-table-hover-translate));
+            box-shadow: var(--ag-shadow-1);
+        }
+    }
+
+    // Target tfoot only when explicitly present
+    tfoot tr {
+        border-top: var(--ag-table-border-width-thick) solid var(--ag-primary-color);
+        border-bottom: none;
+
+        th,
+        td {
+            font-weight: var(--ag-font-weight-semibold);
+            background-color: var(--ag-bg-secondary);
+            color: var(--ag-text-primary);
+        }
+    }
+
+    // Striped rows
+    &.striped {
+        tbody tr:nth-of-type(even) {
+            background-color: var(--ag-bg-secondary);
+
+            &:hover {
+                background-color: var(--ag-bg-accent);
+            }
+        }
+    }
+
+    // Bordered table
+    &.bordered {
+
+        th,
+        td {
+            border: var(--ag-table-border-width) solid var(--ag-border-color);
+        }
+    }
+
+    // Theme variations
+    &.theme-success {
+        th {
+            background-color: var(--ag-success-color);
+        }
+
+        tfoot tr {
+            border-top: var(--ag-table-border-width-thick) solid var(--ag-success-color);
+        }
+    }
+
+    &.theme-info {
+        th {
+            background-color: var(--ag-info-color);
+        }
+
+        tfoot tr {
+            border-top: var(--ag-table-border-width-thick) solid var(--ag-info-color);
+        }
+    }
+
+    &.theme-warning {
+        th {
+            background-color: var(--ag-warning-color);
+        }
+
+        tfoot tr {
+            border-top: var(--ag-table-border-width-thick) solid var(--ag-warning-color);
+        }
+    }
+
+    // Compact table
+    &.compact {
+
+        th,
+        td {
+            padding: var(--ag-spacing-sm);
+        }
+
+        font-size: var(--ag-font-size-xs);
+    }
+
+    // Elevated table
+    &.elevated {
+        box-shadow: var(--ag-shadow-4);
+
+        &:hover {
+            box-shadow: var(--ag-shadow-5);
+        }
+    }
+}
+
+// Responsive table styles
+@media screen and (max-width: var(--ag-table-mobile-breakpoint)) {
+    table {
+        border: 0;
+        box-shadow: none;
+        margin: var(--ag-spacing-md) 0;
+
+        caption {
+            font-size: var(--ag-font-size-xl);
+            color: var(--ag-text-primary);
+            font-weight: var(--ag-font-weight-semibold);
+            margin-bottom: var(--ag-spacing-md);
+        }
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: var(--ag-table-border-width);
+            margin: calc(-1 * var(--ag-table-border-width));
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: var(--ag-table-border-width);
+        }
+
+        tr {
+            border-bottom: var(--ag-table-border-width-extra-thick) solid var(--ag-border-color);
+            display: block;
+            margin-bottom: var(--ag-spacing-md);
+            background-color: var(--ag-bg-card);
+            border-radius: var(--ag-radius-lg);
+            box-shadow: var(--ag-shadow-2);
+            padding: var(--ag-spacing-md);
+            transition: all var(--ag-transition-normal);
+
+            &:hover {
+                box-shadow: var(--ag-shadow-3);
+                transform: translateY(var(--ag-table-mobile-hover-translate));
+            }
+        }
+
+        td {
+            border-bottom: var(--ag-table-border-width) solid var(--ag-border-light);
+            display: block;
+            font-size: var(--ag-font-size-sm);
+            text-align: right;
+            padding: var(--ag-spacing-sm) var(--ag-spacing-md);
+            position: relative;
+            padding-left: var(--ag-table-mobile-padding-left);
+            color: var(--ag-text-primary);
+
+            &:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: var(--ag-spacing-sm);
+                width: var(--ag-table-mobile-label-width);
+                padding-right: var(--ag-spacing-sm);
+                white-space: nowrap;
+                font-weight: var(--ag-font-weight-semibold);
+                color: var(--ag-primary-color);
+                text-align: left;
+                font-size: var(--ag-font-size-xs);
+                text-transform: uppercase;
+                letter-spacing: var(--ag-table-letter-spacing);
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            // Special styling for booking status
+            &.status {
+                &:before {
+                    color: var(--ag-text-secondary);
+                }
+            }
+
+            &.booking-available {
+                color: var(--ag-booking-available);
+                font-weight: var(--ag-font-weight-semibold);
+            }
+
+            &.booking-pending {
+                color: var(--ag-booking-pending);
+                font-weight: var(--ag-font-weight-semibold);
+            }
+
+            &.booking-confirmed {
+                color: var(--ag-booking-confirmed);
+                font-weight: var(--ag-font-weight-semibold);
+            }
+
+            &.booking-cancelled {
+                color: var(--ag-booking-cancelled);
+                font-weight: var(--ag-font-weight-semibold);
+            }
+        }
+    }
+}
+
+// Table utilities
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ag-gray-400) var(--ag-bg-secondary);
+
+    table {
+        margin-bottom: 0;
+        min-width: var(--ag-table-min-width);
+    }
+
+    // Custom scrollbar for webkit browsers
+    &::-webkit-scrollbar {
+        height: var(--ag-table-scrollbar-height);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--ag-bg-secondary);
+        border-radius: var(--ag-radius-sm);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--ag-gray-400);
+        border-radius: var(--ag-radius-sm);
+
+        &:hover {
+            background: var(--ag-gray-500);
+        }
+    }
+}
+
+.table-container {
+    margin: var(--ag-spacing-lg) 0;
+    border-radius: var(--ag-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--ag-shadow-3);
+    background-color: var(--ag-bg-card);
+    transition: box-shadow var(--ag-transition-normal);
+
+    &:hover {
+        box-shadow: var(--ag-shadow-4);
+    }
+
+    // Add a subtle border
+    border: var(--ag-table-border-width) solid var(--ag-border-light);
+}
+
+// Loading state
+.table-loading {
+    position: relative;
+    pointer-events: none;
+
+    &::after {
+        content: 'Loading...';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--ag-bg-overlay);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ag-text-primary);
+        font-weight: var(--ag-font-weight-semibold);
+        font-size: var(--ag-font-size-lg);
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+        border-radius: inherit;
+        z-index: var(--ag-z-modal-backdrop);
+    }
+
+    // Animated loading spinner
+    &.spinner::after {
+        content: '';
+        width: var(--ag-table-spinner-size);
+        height: var(--ag-table-spinner-size);
+        border: var(--ag-table-spinner-border-width) solid var(--ag-border-light);
+        border-top: var(--ag-table-spinner-border-width) solid var(--ag-primary-color);
+        border-radius: var(--ag-radius-full);
+        animation: spin 1s linear infinite;
+    }
+}
+
+// Empty state
+.table-empty {
+    td {
+        text-align: center;
+        padding: var(--ag-spacing-xxl);
+        color: var(--ag-text-secondary);
+        font-style: italic;
+        font-size: var(--ag-font-size-lg);
+        background-color: var(--ag-bg-secondary);
+
+        &::before {
+            content: '📋';
+            display: block;
+            font-size: var(--ag-font-size-4xl);
+            margin-bottom: var(--ag-spacing-md);
+            opacity: 0.5;
+        }
+    }
+}
+
+// Booking-specific table styles
+.booking-table {
+    .status-cell {
+        text-align: center;
+        font-weight: var(--ag-font-weight-semibold);
+
+        .status-badge {
+            display: inline-block;
+            padding: var(--ag-spacing-xs) var(--ag-spacing-sm);
+            border-radius: var(--ag-radius-full);
+            font-size: var(--ag-font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            &.available {
+                background-color: var(--ag-booking-available);
+                color: var(--ag-white);
+            }
+
+            &.pending {
+                background-color: var(--ag-booking-pending);
+                color: var(--ag-white);
+            }
+
+            &.confirmed {
+                background-color: var(--ag-booking-confirmed);
+                color: var(--ag-white);
+            }
+
+            &.cancelled {
+                background-color: var(--ag-booking-cancelled);
+                color: var(--ag-white);
+            }
+
+            &.completed {
+                background-color: var(--ag-booking-completed);
+                color: var(--ag-white);
+            }
+        }
+    }
+
+    .action-cell {
+        text-align: center;
+
+        .action-button {
+            @extend .ag-button;
+            margin: 0 var(--ag-spacing-xs);
+            font-size: var(--ag-font-size-xs);
+            padding: var(--ag-spacing-xs) var(--ag-spacing-sm);
+        }
+    }
+}
+
+// Animation keyframes
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// Dark theme support
+[data-theme="dark"] {
+    table {
+        th {
+            background-color: var(--ag-primary-dark);
+        }
+
+        tr:hover {
+            background-color: var(--ag-gray-700);
+        }
+    }
+
+    .table-loading::after {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
