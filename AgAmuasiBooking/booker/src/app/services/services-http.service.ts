@@ -5,13 +5,14 @@ import { environment } from '../environments/environment';
 import {
   AddServiceDto,
   AddServiceResponse,
-  ServiceListResponse
+  ApiErrorResponse,
+  ServiceListResponseDto
 } from './models/services.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServicesHttp {
+export class ServicesHttpService {
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.AppUrl}Services`;
 
@@ -20,8 +21,8 @@ export class ServicesHttp {
    * GET /api/Services
    * @returns Observable of service list with grouped costs
    */
-  getServices(): Observable<ServiceListResponse[]> {
-    return this.http.get<ServiceListResponse[]>(this.apiUrl);
+  getServices(): Observable<ServiceListResponseDto[]> {
+    return this.http.get<ServiceListResponseDto[]>(this.apiUrl);
   }
 
   /**
@@ -34,20 +35,26 @@ export class ServicesHttp {
    * @param service - The service data to add or update
    * @returns Observable of either servicesID (number) for update, or AddServiceResponse for create
    */
-  addService(service: AddServiceDto): Observable<number> {
-    return this.http.post<number>(this.apiUrl, service);
+  addService(service: AddServiceDto): Observable<number | AddServiceResponse> {
+    return this.http.post<number | AddServiceResponse>(this.apiUrl, service);
   }
 
   /**
    * Update an existing service name
    * Convenience method that sets servicesID and calls addService
    * 
- * @param servicesID - ID of the service to update
+   * @param servicesID - ID of the service to update
    * @param serviceName - New service name
    * @returns Observable of servicesID
- */
-  updateService(serv: AddServiceDto): Observable<number> {
-    return this.http.post<number>(this.apiUrl, serv);
+   */
+  updateService(servicesID: number, serviceName: string): Observable<number> {
+    const dto: AddServiceDto = {
+      servicesID,
+      serviceName,
+      cost: 0, // Cost is ignored for updates
+      perPerson: false // PerPerson is ignored for updates
+    };
+    return this.http.post<number>(this.apiUrl, dto);
   }
 
   /**
@@ -59,7 +66,13 @@ export class ServicesHttp {
    * @param perPerson - Whether the cost is per person
    * @returns Observable of AddServiceResponse with new IDs
    */
-  createService(serv: AddServiceDto): Observable<AddServiceResponse> {
-    return this.http.post<AddServiceResponse>(this.apiUrl, serv);
+  createService(serviceName: string, cost: number, perPerson: boolean): Observable<AddServiceResponse> {
+    const dto: AddServiceDto = {
+      servicesID: 0,
+      serviceName,
+      cost,
+      perPerson
+    };
+    return this.http.post<AddServiceResponse>(this.apiUrl, dto);
   }
 }

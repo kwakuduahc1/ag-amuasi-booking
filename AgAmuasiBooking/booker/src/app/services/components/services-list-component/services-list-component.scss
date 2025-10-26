@@ -1,0 +1,76 @@
+// AgAmuasi Services List Component Styles
+
+.ag-services-container {
+    padding: var(--ag-spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ag-services-title {
+    margin-bottom: var(--ag-spacing-lg);
+    text-align: center;
+}
+
+.ag-services-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: var(--ag-spacing-lg);
+    gap: var(--ag-spacing-md);
+
+    // Ensure proper click behavior
+    position: relative;
+    z-index: 1;
+
+    // Ensure buttons are clickable
+    button {
+        position: relative;
+        z-index: 2;
+        pointer-events: auto !important;
+    }
+}
+
+.ag-services-table {
+    width: 100%;
+
+    .ag-service-name {
+        font-weight: var(--ag-font-weight-medium);
+    }
+
+    .ag-service-cost {
+        text-align: right;
+
+        .ag-currency {
+            font-weight: var(--ag-font-weight-semibold);
+            color: var(--ag-primary-color);
+        }
+    }
+}
+
+.ag-empty-state {
+    text-align: center;
+    padding: var(--ag-spacing-xxl);
+
+    .ag-empty-icon {
+        font-size: 3rem;
+        margin-bottom: var(--ag-spacing-md);
+        opacity: 0.5;
+    }
+
+    .ag-empty-title {
+        color: var(--ag-text-secondary);
+        margin-bottom: var(--ag-spacing-sm);
+    }
+
+    .ag-empty-message {
+        color: var(--ag-text-muted);
+        font-size: var(--ag-font-size-sm);
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .ag-services-actions {
+        justify-content: center;
+    }
+}

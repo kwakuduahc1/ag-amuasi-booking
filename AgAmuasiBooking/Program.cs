@@ -16,7 +16,6 @@ namespace AgAmuasiBooking
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register an Npgsql data source for use by Npgsql
             builder.Services.AddNpgsqlDataSource(builder.Configuration.GetConnectionString("DefaultConnection")!, x =>
             {
                 x.EnableDynamicJson()
@@ -78,15 +77,14 @@ namespace AgAmuasiBooking
                 };
             });
 
-            // Add Authorization Policies
             builder.Services.AddAuthorizationBuilder()
-                // Add Authorization Policies
                 .AddPolicy("Users", policy => policy.RequireRole("User"))
-                // Add Authorization Policies
-                .AddPolicy("Administration", policy => policy.RequireRole(["Administrator", "Developer", "Management", "Administrator"]))
+                .AddPolicy("Administration", policy => policy.RequireRole(["Administrator", "Developer", "Manager", "Administrator"]))
+                .AddPolicy("Management", policy =>
+                    policy.RequireRole(["Manager", "Developer"])
+                    )
                 .AddDefaultPolicy("Default", x => x.RequireAuthenticatedUser());
 
-            // Health checks - provide connection string for Npgsql
             builder.Services.AddHealthChecks()
                 .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!)
                 .AddRedis(builder.Configuration.GetConnectionString("Valkey")!);
@@ -94,7 +92,6 @@ namespace AgAmuasiBooking
             builder.Services.AddDataProtection();
             builder.Services.AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN");
 
-            // Fix: correct C# array initializer syntax
             string[] locs = builder.Environment.IsDevelopment()
                 ? ["http://localhost:4200"]
                 : ["https://bookings.ghid-kccr.org"];
@@ -117,17 +114,13 @@ namespace AgAmuasiBooking
             builder.Services.AddSignalR(x => x.KeepAliveInterval = TimeSpan.FromSeconds(10));
             builder.Services.AddResponseCaching();
 
-            // Register IHttpContextAccessor before using it
             builder.Services.AddHttpContextAccessor();
 
-            // Expose CancellationToken for the current HTTP request safely
             builder.Services.AddScoped(typeof(CancellationToken), sp =>
             {
                 var ctx = sp.GetRequiredService<IHttpContextAccessor>().HttpContext;
                 return ctx?.RequestAborted ?? CancellationToken.None;
             });
-
-            // Add OpenAPI and Swagger services (Development only)
             if (builder.Environment.IsDevelopment())
             {
                 builder.Services.AddOpenApi();
@@ -146,7 +139,6 @@ namespace AgAmuasiBooking
                         }
                     });
 
-                    // Add JWT Authentication to Swagger
                     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
@@ -176,7 +168,6 @@ namespace AgAmuasiBooking
 
             var app = builder.Build();
 
-            // Forwarded headers first (before other proxy-dependent middleware)
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -184,24 +175,13 @@ namespace AgAmuasiBooking
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            // Routing must be set before authentication/authorization
             app.UseRouting();
-
-            // Use CORS with correct policy name
             app.UseCors("bStudioApps");
 
-            // Authentication & Authorization in correct order
             app.UseAuthentication();
             app.UseAuthorization();
-
-            // Response caching should be enabled before endpoints are executed
             app.UseResponseCaching();
-
-            // Map endpoints
             app.MapControllers();
-
-            // Enable OpenAPI and Swagger UI (Development only)
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
@@ -210,11 +190,10 @@ namespace AgAmuasiBooking
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "AgAmuasi Booking API v1");
                     options.RoutePrefix = "swagger";
-                    options.DocumentTitle = "AgAmuasi Booking API Documentation";
+                    options.DocumentTitle = "AG - Amuasi Booking API Documentation";
                     options.DisplayRequestDuration();
                 });
             }
-
             app.Run();
         }
     }

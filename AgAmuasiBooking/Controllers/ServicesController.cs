@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
@@ -45,6 +44,7 @@ namespace AccountingUltimate.Controllers
             {
                 k.ServicesID,
                 k.ServiceName,
+                v.First().Cost,
                 Costs = v.Select(x => new
                 {
                     x.ServiceCostsID,
@@ -95,4 +95,8 @@ namespace AccountingUltimate.Controllers
     public record AddServiceDto(int ServicesID, [StringLength(50, MinimumLength = 3)] string ServiceName, [Range(1, double.MaxValue)] decimal Cost, bool PerPerson);
 
     public record ServiceCostDto(int ID, [Range(1, double.MaxValue)] decimal Cost);
+
+    public record ServiceListResponseDto(int ServicesID, string ServiceName, decimal Cost, IEnumerable<ServiceCostResponseDto> Costs);
+
+    public record ServiceCostResponseDto(int ServiceCostsID, decimal Cost);
 }

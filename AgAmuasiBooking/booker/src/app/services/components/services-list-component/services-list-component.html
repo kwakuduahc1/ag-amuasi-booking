@@ -1,3 +1,54 @@
-<p>services-list-component works!</p>
+<div class="ag-services-container">
+    <h2 class="ag-services-title">Available Services</h2>
 
-{{status.roles() | json}}
+    <div class="ag-services-actions">
+        <button (click)="addService()" class="ag-button info" type="button" title="Add new service">
+            <mat-icon class="ag-button-icon">add</mat-icon>
+            <span class="ag-button-text">Add Service</span>
+        </button>
+    </div>
+
+    @if (services() && services().length > 0) {
+    <div class="table-container">
+        <table class="ag-services-table striped elevated">
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Cost (GHS)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (service of services(); track service.servicesID) {
+                <tr>
+                    <td data-label="Service Name" class="ag-service-name">{{ service.serviceName }}</td>
+                    <td data-label="Cost" class="ag-service-cost">
+                        <span class="ag-currency">{{ service.cost | number }}</span>
+                    </td>
+                    <td data-label="Actions" class="ag-actions-cell">
+                        <button class="ag-button tertiary ag-action-btn" type="button" title="View service costs">
+                            <mat-icon class="ag-button-icon">attach_money</mat-icon>
+                            <span class="ag-button-text">Costs</span>
+                        </button>
+                        <button class="ag-button accent ag-action-btn" type="button" title="Edit service">
+                            <mat-icon class="ag-button-icon">edit</mat-icon>
+                            <span class="ag-button-text">Edit</span>
+                        </button>
+                        <button class="ag-button danger ag-action-btn" type="button" title="Delete service">
+                            <mat-icon class="ag-button-icon">delete</mat-icon>
+                            <span class="ag-button-text">Delete</span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    } @else {
+    <div class="ag-empty-state">
+        <div class="ag-empty-icon">📋</div>
+        <h3 class="ag-empty-title">No Services Available</h3>
+        <p class="ag-empty-message">No services have been configured yet.</p>
+    </div>
+    }
+</div>

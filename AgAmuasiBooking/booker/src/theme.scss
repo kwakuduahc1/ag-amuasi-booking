@@ -59,6 +59,20 @@ $ag-amuasi-dark-theme: mat.define-theme((color: (theme-type: dark,
     --ag-warning-color: #ff9800;
     --ag-error-color: #f44336;
 
+    // Tertiary colors
+    --ag-tertiary-color: #009688; // Teal - distinct from orange accent
+    --ag-tertiary-light: #80cbc4;
+    --ag-tertiary-dark: #00695c;
+    --ag-tertiary-purple: #9c27b0;
+    --ag-tertiary-purple-light: #ce93d8;
+    --ag-tertiary-purple-dark: #6a1b9a;
+    --ag-tertiary-teal: #009688;
+    --ag-tertiary-teal-light: #80cbc4;
+    --ag-tertiary-teal-dark: #00695c;
+    --ag-tertiary-indigo: #3f51b5;
+    --ag-tertiary-indigo-light: #9fa8da;
+    --ag-tertiary-indigo-dark: #283593;
+
     // Background colors
     --ag-bg-primary: var(--ag-white);
     --ag-bg-secondary: var(--ag-gray-50);
@@ -104,14 +118,14 @@ $ag-amuasi-dark-theme: mat.define-theme((color: (theme-type: dark,
     // Typography
     --ag-font-family-primary: 'Roboto, "Helvetica Neue", sans-serif';
     --ag-font-family-secondary: 'Roboto, "Helvetica Neue", sans-serif';
-    --ag-font-size-xs: 0.75rem; // 12px
-    --ag-font-size-sm: 0.875rem; // 14px
-    --ag-font-size-base: 1rem; // 16px
-    --ag-font-size-lg: 1.125rem; // 18px
-    --ag-font-size-xl: 1.25rem; // 20px
-    --ag-font-size-2xl: 1.5rem; // 24px
-    --ag-font-size-3xl: 1.875rem; // 30px
-    --ag-font-size-4xl: 2.25rem; // 36px
+    --ag-font-size-xs: 0.7875rem; // 12.6px (was 12px)
+    --ag-font-size-sm: 0.91875rem; // 14.7px (was 14px)
+    --ag-font-size-base: 1.05rem; // 16.8px (was 16px)
+    --ag-font-size-lg: 1.18125rem; // 18.9px (was 18px)
+    --ag-font-size-xl: 1.3125rem; // 21px (was 20px)
+    --ag-font-size-2xl: 1.575rem; // 25.2px (was 24px)
+    --ag-font-size-3xl: 1.96875rem; // 31.5px (was 30px)
+    --ag-font-size-4xl: 2.3625rem; // 37.8px (was 36px)
 
     // Line heights
     --ag-leading-none: 1;

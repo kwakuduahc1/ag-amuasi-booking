@@ -6,10 +6,9 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: var(--ag-spacing-lg) 0;
+    margin: var(--ag-spacing-md) 0;
     font-size: var(--ag-font-size-sm);
     font-family: var(--ag-font-family-primary);
-    box-shadow: var(--ag-shadow-2);
     border-radius: var(--ag-radius-lg);
     overflow: hidden;
     background-color: var(--ag-bg-card);
@@ -30,6 +29,7 @@ table {
         text-transform: uppercase;
         font-size: var(--ag-font-size-xs);
         letter-spacing: var(--ag-table-letter-spacing);
+        text-align: center;
         position: relative;
 
         &::after {
@@ -50,7 +50,6 @@ table {
         &:hover {
             background-color: var(--ag-bg-accent);
             transform: translateY(var(--ag-table-hover-translate));
-            box-shadow: var(--ag-shadow-1);
         }
     }
 
@@ -129,14 +128,7 @@ table {
         font-size: var(--ag-font-size-xs);
     }
 
-    // Elevated table
-    &.elevated {
-        box-shadow: var(--ag-shadow-4);
-
-        &:hover {
-            box-shadow: var(--ag-shadow-5);
-        }
-    }
+    // Elevated table styles removed for cleaner look
 }
 
 // Responsive table styles
@@ -175,7 +167,6 @@ table {
             transition: all var(--ag-transition-normal);
 
             &:hover {
-                box-shadow: var(--ag-shadow-3);
                 transform: translateY(var(--ag-table-mobile-hover-translate));
             }
         }
@@ -273,16 +264,10 @@ table {
 }
 
 .table-container {
-    margin: var(--ag-spacing-lg) 0;
+    margin: var(--ag-spacing-md) 0;
     border-radius: var(--ag-radius-lg);
     overflow: hidden;
-    box-shadow: var(--ag-shadow-3);
     background-color: var(--ag-bg-card);
-    transition: box-shadow var(--ag-transition-normal);
-
-    &:hover {
-        box-shadow: var(--ag-shadow-4);
-    }
 
     // Add a subtle border
     border: var(--ag-table-border-width) solid var(--ag-border-light);
@@ -386,14 +371,50 @@ table {
         }
     }
 
-    .action-cell {
+    .action-cell,
+    .ag-actions-cell {
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--ag-spacing-xs);
+        flex-wrap: wrap;
 
         .action-button {
-            @extend .ag-button;
-            margin: 0 var(--ag-spacing-xs);
+            // Base button properties (replaces @extend .ag-button)
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--ag-spacing-sm);
+            border: 2px solid transparent;
+            border-radius: var(--ag-radius-md);
+            font-family: var(--ag-font-family-primary);
+            font-weight: var(--ag-font-weight-medium);
+            line-height: var(--ag-leading-none);
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--ag-transition-fast);
+            -webkit-user-select: none;
+            user-select: none;
+            white-space: nowrap;
+
+            // Table-specific overrides
+            margin: 0;
             font-size: var(--ag-font-size-xs);
             padding: var(--ag-spacing-xs) var(--ag-spacing-sm);
+            min-height: calc(var(--ag-spacing-lg) + var(--ag-spacing-md));
+
+            &:focus {
+                outline: 2px solid var(--ag-primary-color);
+                outline-offset: var(--ag-spacing-xs);
+            }
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
         }
     }
 }

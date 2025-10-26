@@ -4,7 +4,7 @@
  */
 
 /**
- * Service DTO with associated cost information
+ * Service DTO with associated cost information (internal query result)
  * Maps to: ServicesDto record in C#
  */
 export interface ServicesDto {
@@ -21,7 +21,7 @@ export interface ServicesDto {
  * If servicesID = 0: Creates new service with initial cost
  */
 export interface AddServiceDto {
-  servicesID: number;
+  servicesID?: number;
   serviceName: string;
   cost: number;
   perPerson: boolean;
@@ -39,17 +39,20 @@ export interface ServiceCostDto {
 /**
  * Response from GET /api/Services
  * Represents grouped services with their cost history
+ * Maps to: ServiceListResponseDto record in C#
  */
-export interface ServiceListResponse {
+export interface ServiceListResponseDto {
   servicesID: number;
   serviceName: string;
-  costs: ServiceCost[];
+  cost: number;  // Most recent cost (from v.First().Cost)
+  costs: ServiceCostResponseDto[];  // Full cost history
 }
 
 /**
  * Individual service cost in the list response
+ * Maps to: ServiceCostResponseDto record in C#
  */
-export interface ServiceCost {
+export interface ServiceCostResponseDto {
   serviceCostsID: number;
   cost: number;
 }
@@ -58,6 +61,13 @@ export interface ServiceCost {
  * Response from POST /api/Services (create new service)
  */
 export interface AddServiceResponse {
-  id: number;        // servicesID
+  id: number;      // servicesID
   sid: number;       // serviceCostsID
+}
+
+/**
+ * Error response from API
+ */
+export interface ApiErrorResponse {
+  message: string;
 }

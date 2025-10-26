@@ -1,11 +1,15 @@
 // Import Angular Material
 @use '@angular/material' as mat;
 
-// Import the custom AgAmuasi theme
-@import 'theme';
+// Import the custom AgAmuasi theme and components
+@use 'theme';
+@use 'buttons';
+@use 'tables';
+@use 'headers';
+@use 'forms';
 
 // Include the custom theme with Angular Material using new API
-@include mat.theme($ag-amuasi-theme);
+@include mat.theme(theme.$ag-amuasi-theme);
 
 // Global application styles using custom theme variables
 html,
@@ -20,7 +24,7 @@ body {
 
 // Dark theme support
 body.dark-theme {
-  @include mat.theme($ag-amuasi-dark-theme);
+  @include mat.theme(theme.$ag-amuasi-dark-theme);
 }
 
 // Custom scrollbar
@@ -266,6 +270,3 @@ select {
     margin: 0.5in;
   }
 }
-
-/* Import tables styles */
-@import 'tables';

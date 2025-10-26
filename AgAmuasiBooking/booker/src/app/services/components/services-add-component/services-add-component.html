@@ -1,1 +1,86 @@
-<p>services-add-component works!</p>
+<div class="ag-dialog-header">
+    <h2 mat-dialog-title class="ag-dialog-title">Add New Service</h2>
+    <button type="button" mat-icon-button mat-dialog-close class="ag-dialog-close" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content class="ag-dialog-content">
+    <form [formGroup]="form" class="ag-form-container ag-service-form">
+
+        <!-- Service Name Field -->
+        <mat-form-field appearance="outline" class="ag-mat-form-field">
+            <mat-label>Service Name</mat-label>
+            <input matInput formControlName="serviceName" placeholder="Enter service name"
+                [maxlength]="serviceNameMaxLength" required>
+            <mat-icon matSuffix>medical_services</mat-icon>
+            @if (form.get('serviceName')?.pristine || !form.get('serviceName')?.touched) {
+            <mat-hint>Provide a clear, descriptive name for the healthcare service</mat-hint>
+            }
+
+            @if (form.get('serviceName')?.invalid && form.get('serviceName')?.touched) {
+            <mat-error>
+                @if (form.get('serviceName')?.errors?.['required']) {
+                Name required
+                }
+                @if (form.get('serviceName')?.errors?.['minlength']) {
+                Min {{ form.get('serviceName')?.errors?.['minlength']?.requiredLength }} characters
+                }
+                @if (form.get('serviceName')?.errors?.['maxlength']) {
+                Max {{ form.get('serviceName')?.errors?.['maxlength']?.requiredLength }} characters
+                }
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Cost Field -->
+        <mat-form-field appearance="outline" class="ag-mat-form-field">
+            <mat-label>Cost (GHS)</mat-label>
+            <input matInput type="number" formControlName="cost" placeholder="0.00" [min]="costMinValue"
+                [max]="costMaxValue" step="0.01" required>
+            <span matTextPrefix>₵&nbsp;</span>
+            @if (form.get('cost')?.pristine || !form.get('cost')?.touched) {
+            <mat-hint>Enter the cost in Ghana Cedis (minimum ₵{{ costMinValue | number:'1.2-2' }})</mat-hint>
+            }
+
+            @if (form.get('cost')?.invalid && form.get('cost')?.touched) {
+            <mat-error>
+                @if (form.get('cost')?.errors?.['required']) {
+                Cost required
+                }
+                @if (form.get('cost')?.errors?.['min']) {
+                Min ₵{{ form.get('cost')?.errors?.['min']?.min | number:'1.2-2' }}
+                }
+                @if (form.get('cost')?.errors?.['max']) {
+                Max ₵{{ form.get('cost')?.errors?.['max']?.max | number:'1.2-2' }}
+                }
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Per Person Checkbox -->
+        <div class="ag-checkbox-field">
+            <mat-checkbox formControlName="perPerson" class="ag-checkbox">
+                Charge per person
+            </mat-checkbox>
+            @if (form.get('perPerson')?.pristine || !form.get('perPerson')?.touched) {
+            <mat-hint class="ag-checkbox-hint">
+                Check if this service cost applies to each individual person
+            </mat-hint>
+            }
+        </div>
+
+    </form>
+</div>
+
+<div mat-dialog-actions class="ag-dialog-actions">
+    <button mat-button mat-dialog-close class="ag-button secondary" type="button">
+        Cancel
+    </button>
+
+    <button mat-raised-button class="ag-button primary" type="submit" [disabled]="form.invalid || isSubmitting"
+        (click)="onSubmit()">
+        <mat-icon>{{ isSubmitting ? 'hourglass_empty' : 'add' }}</mat-icon>
+        {{ isSubmitting ? 'Adding...' : 'Add Service' }}
+    </button>
+</div>

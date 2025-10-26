@@ -1,0 +1,277 @@
+// AgAmuasi Form Layouts
+// Layout utilities for Angular Material forms
+// Focuses on layout and spacing, not overriding Material design
+
+// Form container layouts
+.ag-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ag-spacing-lg);
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--ag-spacing-lg);
+
+    // Form header section
+    .ag-form-header {
+        text-align: center;
+        margin-bottom: var(--ag-spacing-md);
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: var(--ag-spacing-sm);
+        }
+
+        p {
+            color: var(--ag-text-secondary);
+            font-size: var(--ag-font-size-sm);
+        }
+    }
+
+    // Form body with field groups
+    .ag-form-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ag-spacing-md);
+    }
+
+    // Form footer with actions
+    .ag-form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--ag-spacing-md);
+        margin-top: var(--ag-spacing-lg);
+        padding-top: var(--ag-spacing-md);
+        border-top: 1px solid var(--ag-gray-200);
+
+        // Center actions on mobile
+        @media (max-width: 768px) {
+            justify-content: center;
+            flex-direction: column-reverse;
+
+            .ag-button {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Field grouping layouts
+.ag-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ag-spacing-sm);
+
+    // Group with label
+    .ag-form-group-label {
+        font-weight: var(--ag-font-weight-medium);
+        color: var(--ag-text-primary);
+        font-size: var(--ag-font-size-sm);
+        margin-bottom: var(--ag-spacing-xs);
+    }
+
+    // Group description
+    .ag-form-group-description {
+        color: var(--ag-text-secondary);
+        font-size: var(--ag-font-size-xs);
+        margin-bottom: var(--ag-spacing-sm);
+    }
+}
+
+// Two-column layout for related fields
+.ag-form-row {
+    display: flex;
+    gap: var(--ag-spacing-md);
+    align-items: flex-start;
+
+    // Equal width columns
+    &.ag-form-row-equal {
+        >* {
+            flex: 1;
+        }
+    }
+
+    // Responsive: stack on mobile
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: var(--ag-spacing-sm);
+    }
+}
+
+// Three-column layout (for things like date fields)
+.ag-form-row-triple {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--ag-spacing-md);
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: var(--ag-spacing-sm);
+    }
+}
+
+// Inline form (horizontal layout)
+.ag-form-inline {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--ag-spacing-md);
+    flex-wrap: wrap;
+
+    mat-form-field {
+        min-width: 200px;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+
+        mat-form-field {
+            min-width: auto;
+        }
+    }
+}
+
+// Card-based form layout
+.ag-form-card {
+    background: var(--ag-white);
+    border-radius: var(--ag-radius-lg);
+    padding: var(--ag-spacing-xl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--ag-gray-200);
+
+    .ag-form-card-header {
+        border-bottom: 1px solid var(--ag-gray-200);
+        padding-bottom: var(--ag-spacing-md);
+        margin-bottom: var(--ag-spacing-lg);
+
+        h2,
+        h3 {
+            margin: 0;
+            color: var(--ag-primary-color);
+        }
+    }
+}
+
+// Multi-step form sections
+.ag-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ag-spacing-md);
+
+    .ag-form-section-title {
+        font-size: var(--ag-font-size-lg);
+        font-weight: var(--ag-font-weight-semibold);
+        color: var(--ag-primary-color);
+        margin-bottom: var(--ag-spacing-sm);
+        padding-bottom: var(--ag-spacing-xs);
+        border-bottom: 2px solid var(--ag-primary-light);
+    }
+
+    .ag-form-section-subtitle {
+        color: var(--ag-text-secondary);
+        font-size: var(--ag-font-size-sm);
+        margin-bottom: var(--ag-spacing-md);
+    }
+}
+
+// Form validation and error states
+.ag-form-errors {
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid var(--ag-warn-color);
+    border-radius: var(--ag-radius-md);
+    padding: var(--ag-spacing-md);
+    margin-bottom: var(--ag-spacing-md);
+
+    .ag-form-errors-title {
+        font-weight: var(--ag-font-weight-medium);
+        color: var(--ag-warn-color);
+        margin-bottom: var(--ag-spacing-xs);
+    }
+
+    ul {
+        margin: 0;
+        padding-left: var(--ag-spacing-md);
+        color: var(--ag-warn-color);
+        font-size: var(--ag-font-size-sm);
+    }
+}
+
+// Success message
+.ag-form-success {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid #4caf50;
+    border-radius: var(--ag-radius-md);
+    padding: var(--ag-spacing-md);
+    margin-bottom: var(--ag-spacing-md);
+    color: #2e7d32;
+    font-weight: var(--ag-font-weight-medium);
+}
+
+// Loading state overlay
+.ag-form-loading {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: inherit;
+        z-index: 10;
+    }
+}
+
+// Utilities for Angular Material components
+.ag-mat-form-field {
+    // Full width by default
+    width: 100%;
+
+    // Compact variant
+    &.ag-compact {
+        .mat-mdc-form-field-infix {
+            padding: 8px 0;
+        }
+    }
+}
+
+// Checkbox and radio group layouts
+.ag-checkbox-group,
+.ag-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ag-spacing-xs);
+
+    &.ag-horizontal {
+        flex-direction: row;
+        gap: var(--ag-spacing-lg);
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: var(--ag-spacing-xs);
+        }
+    }
+}
+
+// Form field with icon
+.ag-form-field-with-icon {
+    position: relative;
+
+    .ag-form-field-icon {
+        position: absolute;
+        left: var(--ag-spacing-sm);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--ag-text-secondary);
+        z-index: 1;
+    }
+
+    mat-form-field {
+        .mat-mdc-form-field-infix {
+            padding-left: calc(var(--ag-spacing-xl) + var(--ag-spacing-sm));
+        }
+    }
+}
