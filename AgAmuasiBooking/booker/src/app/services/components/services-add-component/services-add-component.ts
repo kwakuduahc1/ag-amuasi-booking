@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddServiceDto } from '../../models/services.dto';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -8,11 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { ActivityProvider } from '../../../providers/ActivityProvider';
+import { text } from 'stream/consumers';
 
 @Component({
   selector: 'app-services-add-component',
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -25,13 +28,12 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './services-add-component.scss'
 })
 export class ServicesAddComponent {
-  private data = inject<AddServiceDto | null>(MAT_DIALOG_DATA);
+  protected data = inject<AddServiceDto | null>(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<ServicesAddComponent>);
-
-  isSubmitting = false;
+  protected act = inject(ActivityProvider);
 
   form = new FormGroup({
-    serviceName: new FormControl<string>('', {
+    serviceName: new FormControl<string>(this.data?.serviceName ?? '', {
       nonNullable: true,
       validators: [
         Validators.required,
@@ -39,53 +41,32 @@ export class ServicesAddComponent {
         Validators.maxLength(100)
       ]
     }),
-    cost: new FormControl<number>(0, {
+    cost: new FormControl<number>({ value: this.data?.cost || Number.NaN, disabled: !!this.data }, {
       nonNullable: true,
       validators: [
         Validators.required,
         Validators.min(0.01),
       ]
     }),
-    perPerson: new FormControl<boolean>(false, {
+    perPerson: new FormControl<boolean>(this.data?.perPerson ?? false, {
       nonNullable: true
     })
   });
 
-  onSubmit() {
-    if (this.form.valid) {
-      this.isSubmitting = true;
-      const formData: AddServiceDto = {
-        serviceName: this.form.value.serviceName!,
-        cost: this.form.value.cost!,
-        perPerson: this.form.value.perPerson!
-      };
+  getText = computed(() => {
+    if (this.act.activity().isProcessing)
+      return { icon: 'hour_glass', text: 'Saving' }
+    else if (this.data)
+      return { icon: 'edit', text: 'Update' }
+    else return { icon: 'add', text: 'Add' }
+  })
 
-      // TODO: Implement service creation logic
-      console.log('Service data:', formData);
-
-      // Close dialog and return the data
-      this.dialogRef.close(formData);
-    } else {
-      // Mark all fields as touched to show validation errors
-      this.form.markAllAsTouched();
-    }
+  addService(form: Partial<AddServiceDto>) {
+    form.cost = form?.cost || this.data?.cost || 0;
+    this.dialogRef.close(form);
   }
 
   onCancel() {
     this.dialogRef.close();
-  }
-
-  // Dynamic validation getters for template use
-  get serviceNameMaxLength(): number {
-    const maxLengthValidator = this.form.get('serviceName')?.hasError('maxlength');
-    return 100; // Default fallback, could be extracted from validator if needed
-  }
-
-  get costMinValue(): number {
-    return 0.01; // Could be extracted from Validators.min if needed
-  }
-
-  get costMaxValue(): number {
-    return 999999.99; // Could be extracted from validator if added
   }
 }

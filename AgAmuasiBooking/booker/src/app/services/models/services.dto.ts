@@ -4,17 +4,6 @@
  */
 
 /**
- * Service DTO with associated cost information (internal query result)
- * Maps to: ServicesDto record in C#
- */
-export interface ServicesDto {
-  servicesID: number;
-  serviceName: string;
-  cost: number;
-  serviceCostsID: number;
-}
-
-/**
  * DTO for adding or updating a service
  * Maps to: AddServiceDto record in C#
  * If servicesID > 0: Updates existing service name
@@ -41,11 +30,12 @@ export interface ServiceCostDto {
  * Represents grouped services with their cost history
  * Maps to: ServiceListResponseDto record in C#
  */
-export interface ServiceListResponseDto {
+export interface ServicesDto {
   servicesID: number;
   serviceName: string;
   cost: number;  // Most recent cost (from v.First().Cost)
   costs: ServiceCostResponseDto[];  // Full cost history
+  perPerson: boolean;
 }
 
 /**

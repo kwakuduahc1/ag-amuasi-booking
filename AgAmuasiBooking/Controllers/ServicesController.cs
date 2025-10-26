@@ -23,14 +23,15 @@ namespace AccountingUltimate.Controllers
         public async Task<IEnumerable> List()
         {
             const string qry = """
-                SELECT s.servicesid, s.servicename, c.cost, c.servicecostsid
+                SELECT s.servicesid, s.servicename, c.cost, c.servicecostsid, s.perperson
                 FROM services s
                 LEFT JOIN LATERAL(
-                	SELECT c.servicesid, c."cost", c.servicecostsid, ROW_NUMBER() OVER(PARTITION BY  servicesid ORDER BY c.servicecostsid DESC) rn
-                	FROM servicecosts c
-                	WHERE c.servicesid = s.servicesid
+                   	SELECT c.servicesid, c."cost", c.servicecostsid, ROW_NUMBER() OVER(PARTITION BY  servicesid ORDER BY c.servicecostsid DESC) rn
+                   	FROM servicecosts c
+                   	WHERE c.servicesid = s.servicesid
                 )  c ON c.servicesid = s.servicesid
                 WHERE c.rn < 6
+                ORDER BY s.servicename
                 """;
             using var con = db.Database.GetDbConnection();
             if (con.State != ConnectionState.Open)
@@ -39,12 +40,14 @@ namespace AccountingUltimate.Controllers
             return res.GroupBy(x => new
             {
                 x.ServicesID,
-                x.ServiceName
+                x.ServiceName,
+                x.PerPerson
             }, (k, v) => new
             {
                 k.ServicesID,
                 k.ServiceName,
-                v.First().Cost,
+                k.PerPerson,
+                Cost = v.First()?.Cost ?? 0,
                 Costs = v.Select(x => new
                 {
                     x.ServiceCostsID,
@@ -65,7 +68,7 @@ namespace AccountingUltimate.Controllers
                 _serv.ServiceName = serv.ServiceName;
                 db.Entry(_serv).State = EntityState.Modified;
                 await db.SaveChangesAsync(token);
-                return Ok(_serv.ServicesID);
+                return Ok(new { id = _serv.ServicesID, sid = 0 });
             }
             else
             {
@@ -88,9 +91,20 @@ namespace AccountingUltimate.Controllers
                 });
             }
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteService(int id)
+        {
+            var serv = await db.Services.FindAsync(id, token);
+            if (serv == null)
+                return NotFound(new { Message = "The service was not found" });
+            db.Services.Remove(serv);
+            await db.SaveChangesAsync(token);
+            return Ok(new { Message = "The service has been deleted successfully" });
+        }
     }
 
-    public record ServicesDto(int ServicesID, string ServiceName, decimal Cost, int ServiceCostsID);
+    public record ServicesDto(int ServicesID, string ServiceName, decimal Cost, int ServiceCostsID, bool PerPerson);
 
     public record AddServiceDto(int ServicesID, [StringLength(50, MinimumLength = 3)] string ServiceName, [Range(1, double.MaxValue)] decimal Cost, bool PerPerson);
 

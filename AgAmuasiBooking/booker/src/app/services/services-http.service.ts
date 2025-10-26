@@ -5,8 +5,7 @@ import { environment } from '../environments/environment';
 import {
   AddServiceDto,
   AddServiceResponse,
-  ApiErrorResponse,
-  ServiceListResponseDto
+  ServicesDto,
 } from './models/services.dto';
 
 @Injectable({
@@ -21,8 +20,8 @@ export class ServicesHttpService {
    * GET /api/Services
    * @returns Observable of service list with grouped costs
    */
-  getServices(): Observable<ServiceListResponseDto[]> {
-    return this.http.get<ServiceListResponseDto[]>(this.apiUrl);
+  getServices(): Observable<ServicesDto[]> {
+    return this.http.get<ServicesDto[]>(this.apiUrl);
   }
 
   /**
@@ -35,8 +34,8 @@ export class ServicesHttpService {
    * @param service - The service data to add or update
    * @returns Observable of either servicesID (number) for update, or AddServiceResponse for create
    */
-  addService(service: AddServiceDto): Observable<number | AddServiceResponse> {
-    return this.http.post<number | AddServiceResponse>(this.apiUrl, service);
+  addService(service: AddServiceDto): Observable<{ id: number, sid: number }> {
+    return this.http.post<{ id: number, sid: number }>(this.apiUrl, service);
   }
 
   /**
@@ -74,5 +73,9 @@ export class ServicesHttpService {
       perPerson
     };
     return this.http.post<AddServiceResponse>(this.apiUrl, dto);
+  }
+
+  removeService(servicesID: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${servicesID}`);
   }
 }
