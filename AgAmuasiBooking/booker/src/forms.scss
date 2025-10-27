@@ -229,6 +229,14 @@
     // Full width by default
     width: 100%;
 
+    // Ensure all inputs start from left and flow to right
+    input,
+    textarea,
+    select {
+        text-align: left;
+        direction: ltr;
+    }
+
     // Compact variant
     &.ag-compact {
         .mat-mdc-form-field-infix {
@@ -272,6 +280,176 @@
     mat-form-field {
         .mat-mdc-form-field-infix {
             padding-left: calc(var(--ag-spacing-xl) + var(--ag-spacing-sm));
+        }
+    }
+}
+
+// Dialog-specific layouts
+.ag-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: var(--ag-spacing-md) var(--ag-spacing-lg);
+    border-bottom: 1px solid var(--ag-gray-200);
+
+    .ag-dialog-title {
+        margin: 0;
+        font-size: var(--ag-font-size-lg);
+        font-weight: var(--ag-font-weight-semibold);
+        color: var(--ag-primary-color);
+    }
+}
+
+.ag-dialog-content {
+    padding: var(--ag-spacing-lg);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.ag-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ag-spacing-md);
+    padding: var(--ag-spacing-md) var(--ag-spacing-lg);
+    border-top: 1px solid var(--ag-gray-200);
+
+    @media (max-width: 768px) {
+        justify-content: center;
+        flex-direction: column-reverse;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
+// Number input field styling
+.ag-number-input {
+    max-width: 333px;
+    min-width: 200px;
+
+    input[type="number"] {
+        font-weight: var(--ag-font-weight-medium);
+        text-align: left;
+        // font-size: var(--ag-font-size-sm);
+    }
+
+    mat-label {
+        font-weight: var(--ag-font-weight-medium);
+        color: var(--ag-text-primary);
+    }
+
+    // Compact sizing for numbers
+    .mat-mdc-form-field-infix {
+        padding: var(--ag-spacing-sm) var(--ag-spacing-xs);
+    }
+
+    // Remove spinner arrows on webkit browsers
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    // Remove spinner arrows on Firefox and modern browsers
+    input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    // Small variant for very compact numbers
+    &.ag-compact {
+        max-width: 133px;
+        min-width: 107px;
+
+        input[type="number"] {
+            font-size: var(--ag-font-size-xs);
+        }
+    }
+
+    // Large variant for important numbers
+    &.ag-large {
+        max-width: 240px;
+        min-width: 160px;
+
+        input[type="number"] {
+            font-size: var(--ag-font-size-base);
+            font-weight: var(--ag-font-weight-semibold);
+        }
+    }
+
+    @media (max-width: 768px) {
+        max-width: 160px;
+        min-width: 107px;
+    }
+}
+
+// Cost input field styling (inherits from number input)
+.ag-cost-input-field {
+    @extend .ag-number-input;
+    max-width: 213px;
+    min-width: 160px;
+
+    mat-label {
+        color: var(--ag-primary-color);
+    }
+
+    // Currency prefix styling
+    .mat-mdc-form-field-text-prefix {
+        color: var(--ag-primary-color);
+        font-weight: var(--ag-font-weight-semibold);
+        margin-right: var(--ag-spacing-xs);
+        font-size: var(--ag-font-size-sm);
+    }
+
+    // Currency suffix styling
+    .mat-mdc-form-field-text-suffix {
+        color: var(--ag-text-secondary);
+        font-size: var(--ag-font-size-xs);
+        margin-left: var(--ag-spacing-xs);
+    }
+
+    @media (max-width: 768px) {
+        max-width: 187px;
+        min-width: 133px;
+    }
+}
+
+// Cost input section layout (replaces ag-cost-form-actions)
+.ag-cost-input-section {
+    padding: var(--ag-spacing-md) var(--ag-spacing-lg);
+    border-bottom: 1px solid var(--ag-gray-200);
+    background-color: var(--ag-gray-50);
+
+    .ag-form-inline {
+        justify-content: flex-start;
+        align-items: flex-end;
+        gap: var(--ag-spacing-md);
+        margin: 0;
+
+        mat-form-field {
+            margin-bottom: 0;
+        }
+
+        .ag-add-cost-button {
+            margin-bottom: var(--ag-spacing-xs);
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: var(--ag-spacing-sm) var(--ag-spacing-md);
+
+        .ag-form-inline {
+            flex-direction: column;
+            align-items: stretch;
+            gap: var(--ag-spacing-sm);
+
+            .ag-add-cost-button {
+                margin-bottom: 0;
+                width: 100%;
+            }
         }
     }
 }

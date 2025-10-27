@@ -45,6 +45,8 @@ export interface ServicesDto {
 export interface ServiceCostResponseDto {
   serviceCostsID: number;
   cost: number;
+  dateSet: Date;
+  servicesID: number;
 }
 
 /**

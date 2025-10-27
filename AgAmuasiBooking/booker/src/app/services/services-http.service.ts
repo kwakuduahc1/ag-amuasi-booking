@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import {
   AddServiceDto,
   AddServiceResponse,
+  ServiceCostDto,
   ServicesDto,
 } from './models/services.dto';
 
@@ -77,5 +78,9 @@ export class ServicesHttpService {
 
   removeService(servicesID: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${servicesID}`);
+  }
+
+  addCost(serv: ServiceCostDto): Observable<number> {
+    return this.http.post<number>(`${this.apiUrl}/Cost`, serv);
   }
 }

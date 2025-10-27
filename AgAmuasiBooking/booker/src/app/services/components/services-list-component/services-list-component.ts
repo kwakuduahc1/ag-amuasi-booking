@@ -85,7 +85,7 @@ export class ServicesListComponent {
               perPerson: this.service()?.perPerson || false,
               cost: this.service()!.cost,
               costs: [
-                { serviceCostsID: resp.sid, cost: this.service()!.cost }
+                { serviceCostsID: resp.sid, cost: this.service()!.cost, dateSet: new Date(), servicesID: resp.id }
               ]
             }, ...p]);
           }
@@ -112,9 +112,10 @@ export class ServicesListComponent {
   }
 
   costs(serv: ServicesDto) {
-    console.log('Opening costs for service:', serv);
     this.diag.open<ServicesCostsComponent, {}, ServiceCostDto>(ServicesCostsComponent, {
-      data: serv
+      data: serv,
+      width: '500px',
+      disableClose: true
     })
       .afterClosed()
       .pipe()

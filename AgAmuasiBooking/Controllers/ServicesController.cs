@@ -23,10 +23,10 @@ namespace AccountingUltimate.Controllers
         public async Task<IEnumerable> List()
         {
             const string qry = """
-                SELECT s.servicesid, s.servicename, c.cost, c.servicecostsid, s.perperson
+                SELECT s.servicesid, s.servicename, c.cost, c.servicecostsid, s.perperson, c.dateset
                 FROM services s
                 LEFT JOIN LATERAL(
-                   	SELECT c.servicesid, c."cost", c.servicecostsid, ROW_NUMBER() OVER(PARTITION BY  servicesid ORDER BY c.servicecostsid DESC) rn
+                   	SELECT c.servicesid, c."cost", c.servicecostsid, c.dateset, ROW_NUMBER() OVER(PARTITION BY  servicesid ORDER BY c.servicecostsid DESC) rn
                    	FROM servicecosts c
                    	WHERE c.servicesid = s.servicesid
                 )  c ON c.servicesid = s.servicesid
@@ -51,8 +51,10 @@ namespace AccountingUltimate.Controllers
                 Costs = v.Select(x => new
                 {
                     x.ServiceCostsID,
-                    x.Cost
+                    x.Cost,
+                    x.DateSet
                 })
+                .OrderByDescending(p => p.ServiceCostsID)
             });
         }
 
@@ -92,6 +94,23 @@ namespace AccountingUltimate.Controllers
             }
         }
 
+        [HttpPost("Cost")]
+        public async Task<IActionResult> Cost([FromBody] ServiceCostDto cost)
+        {
+            var serv = await db.Services.FindAsync(cost.ID);
+            if (serv == null)
+                return BadRequest(new { Message = "The service was not found" });
+            var _cost = new ServiceCosts
+            {
+                Cost = cost.Cost,
+                ServicesID = serv.ServicesID,
+                DateSet = DateTime.UtcNow,
+            };
+            db.ServiceCosts.Add(_cost);
+            await db.SaveChangesAsync(token);
+            return Accepted(_cost.ServiceCostsID);
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteService(int id)
         {
@@ -104,7 +123,7 @@ namespace AccountingUltimate.Controllers
         }
     }
 
-    public record ServicesDto(int ServicesID, string ServiceName, decimal Cost, int ServiceCostsID, bool PerPerson);
+    public record ServicesDto(int ServicesID, string ServiceName, decimal Cost, int ServiceCostsID, bool PerPerson, DateTime DateSet);
 
     public record AddServiceDto(int ServicesID, [StringLength(50, MinimumLength = 3)] string ServiceName, [Range(1, double.MaxValue)] decimal Cost, bool PerPerson);
 

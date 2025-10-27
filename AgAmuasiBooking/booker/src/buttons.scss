@@ -529,3 +529,127 @@
         }
     }
 }
+
+// Dialog Close Button
+// Specialized close button for dialogs and modals
+.ag-dialog-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: var(--ag-radius-full);
+    background-color: transparent;
+    color: var(--ag-text-secondary);
+    cursor: pointer;
+    transition: all var(--ag-transition-fast);
+    padding: 0;
+    margin-left: auto;
+    z-index: 10;
+
+    // When used in a header container with flex layout
+    .ag-dialog-header & {
+        position: absolute;
+        top: var(--ag-spacing-sm);
+        right: var(--ag-spacing-sm);
+    }
+
+    // When used as first element (floating independently)
+    &:first-child {
+        position: fixed;
+        top: var(--ag-spacing-md);
+        right: var(--ag-spacing-md);
+    }
+
+    // Icon sizing
+    mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    // Hover state
+    &:hover {
+        background-color: var(--ag-gray-100);
+        color: var(--ag-text-primary);
+        transform: scale(1.1);
+    }
+
+    // Active state
+    &:active {
+        background-color: var(--ag-gray-200);
+        transform: scale(0.95);
+    }
+
+    // Focus state
+    &:focus {
+        outline: 2px solid var(--ag-primary-color);
+        outline-offset: 2px;
+        background-color: var(--ag-gray-100);
+    }
+
+    // Disabled state
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+        transform: none;
+    }
+
+    // Dark theme variant
+    &.dark-theme {
+        color: var(--ag-text-secondary-dark);
+
+        &:hover {
+            background-color: var(--ag-gray-800);
+            color: var(--ag-text-primary-dark);
+        }
+
+        &:active {
+            background-color: var(--ag-gray-700);
+        }
+
+        &:focus {
+            background-color: var(--ag-gray-800);
+        }
+    }
+
+    // Danger variant (for important close actions)
+    &.danger {
+        color: var(--ag-warn-color);
+
+        &:hover {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--ag-warn-dark);
+        }
+
+        &:active {
+            background-color: rgba(244, 67, 54, 0.2);
+        }
+    }
+
+    // Large variant for touch devices
+    &.large {
+        width: 48px;
+        height: 48px;
+
+        mat-icon {
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    // Small variant for compact dialogs
+    &.small {
+        width: 32px;
+        height: 32px;
+
+        mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+        }
+    }
+}

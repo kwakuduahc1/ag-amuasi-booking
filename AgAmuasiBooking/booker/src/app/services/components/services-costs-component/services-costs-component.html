@@ -1,1 +1,47 @@
-<p>services-costs-component works!</p>
+<div class="ag-dialog-header">
+    <h2 mat-dialog-title class="ag-dialog-title h1-center">{{service.serviceName}} prices</h2>
+    <button type="button" mat-icon-button (click)="close()" class="ag-dialog-close" mat-dialog-close
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div mat-dialog-content class="ag-dialog-content">
+    <form name="form" [formGroup]="form" (submit)="addCost(form.value)">
+        <mat-form-field appearance="outline" class="">
+            <mat-label>New Cost (GHS)</mat-label>
+            <input matInput type="number" formControlName="cost" title="Add new cost" step="10">
+            @if (form.get('cost')?.invalid && form.get('cost')?.touched) {
+            <mat-error>
+                @if (form.get('cost')?.errors?.['required']) {
+                <span>*</span>
+                }
+                @if (form.get('cost')?.errors?.['min']) {
+                <span> Min ₵{{ form.get('cost')?.errors?.['min']?.min }}</span>
+                }
+                @if (form.get('cost')?.errors?.['max']) {
+                <span>Max ₵{{ form.get('cost')?.errors?.['max']?.max }}</span> }
+            </mat-error>
+            }
+        </mat-form-field>
+        <button mat-button class="" type="submit" [disabled]="form.invalid" title="Add new cost">
+            <mat-icon class="">add</mat-icon>
+            <span class="">Add Cost</span>
+        </button>
+    </form>
+    <table class="table ag-services-table">
+        <thead>
+            <tr>
+                <th>Cost</th>
+                <th>Date Set</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (c of costs(); track $index) {
+            <tr>
+                <td>{{ c.cost | number }}</td>
+                <td>{{ c.dateSet | date }}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

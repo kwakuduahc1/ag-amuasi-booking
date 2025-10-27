@@ -9,7 +9,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ActivityProvider } from '../../../providers/ActivityProvider';
-import { text } from 'stream/consumers';
 
 @Component({
   selector: 'app-services-add-component',
