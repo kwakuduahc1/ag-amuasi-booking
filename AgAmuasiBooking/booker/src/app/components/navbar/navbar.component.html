@@ -13,9 +13,9 @@
                 <mat-icon matListIcon class="ag-nav-icon ag-user-icon">person</mat-icon>
                 <span matLine class="ag-user-name">{{status.user()?.fullName}}</span>
             </a>
-            <a mat-list-item [routerLink]="['/reservations']" class="ag-nav-item">
-                <mat-icon matListIcon class="ag-nav-icon">book_online</mat-icon>
-                <span matLine class="ag-nav-text">Reservations</span>
+            <a mat-list-item [routerLink]="['/my-bookings']" class="ag-nav-item">
+                <mat-icon matListIcon class="ag-nav-icon">calendar_today</mat-icon>
+                <span matLine class="ag-nav-text">My Bookings</span>
             </a>
             <mat-divider />
             <a mat-list-item [routerLink]="['/services']" class="ag-nav-item">

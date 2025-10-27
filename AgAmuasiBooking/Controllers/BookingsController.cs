@@ -195,17 +195,6 @@ namespace AgAmuasiBooking.Controllers
             var res = await con.ExecuteAsync(closeQry, new { evs });
             return Accepted();
         }
-
-        [HttpDelete("{id:required:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var booking = await db.Bookings.FindAsync(id, token);
-            if (booking is null)
-                return BadRequest(new { Message = "Booking not found" });
-            db.Entry(booking).State = EntityState.Deleted;
-            await db.SaveChangesAsync(token);
-            return Ok();
-        }
     }
 
     public record AddBookingDto(
