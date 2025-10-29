@@ -1,4 +1,4 @@
-namespace AgAmuasiBooking.Controllers.Models;
+namespace AgAmuasiBooking.Models;
 
 /// <summary>
 /// DTO for service data with associated cost information.

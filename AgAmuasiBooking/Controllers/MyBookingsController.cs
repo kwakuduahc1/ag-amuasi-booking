@@ -50,7 +50,7 @@ namespace AgAmuasiBooking.Controllers
                 Guests = booking.Guests,
                 Reviewer = "",
                 Title = booking.Title,
-                UserName = User.Identity.Name,
+                UserName = User.Identity!.Name!,
                 Purpose = booking.Purpose,
                 IsReviewed = false,
                 HasPaid = false,

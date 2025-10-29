@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AgAmuasiBooking.Controllers.Models;
+namespace AgAmuasiBooking.Models;
 
 /// <summary>
 /// DTO for service cost information.
