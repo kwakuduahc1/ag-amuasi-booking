@@ -1,1 +1,60 @@
-<p>add-booking-component works!</p>
+<app-close-button-component />
+<h1 class="text-center">Reservation informations</h1>
+<form [formGroup]="form" id="form" name="form" (submit)="addReservation(form.value)">
+    <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"
+            title="Title for this booking. The title will help you identify multiple bookings." />
+        <mat-error>
+            @if (form.controls.title.errors; as err) {
+            @if (err?.['required']) {
+            <span>*</span>
+            }
+            @if (err?.['minlength']) {
+            <span>Min: {{ err['minlength'].requiredLength }} chars.</span>
+            }
+            @if (err?.['maxlength']) {
+            <span>Max: {{ err['maxlength'].requiredLength }} chars.</span>
+            }
+            }
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Guests</mat-label>
+        <input type="number" inputmode="numeric" matInput formControlName="guests"
+            title="Number of guests for this booking." />
+        <mat-error>
+            @if (form.controls.guests.errors; as err) {
+            @if (err?.['required']) {
+            <span>*</span>
+            }
+            @if (err?.['min']) {
+            <span>Min: {{ err['min'].min }} guests.</span>
+            }
+            @if (err?.['max']) {
+            <span>Max: {{ err['max'].max }} guests.</span>
+            }
+            }
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Purpose</mat-label>
+        <textarea matInput formControlName="purpose"
+            title="Description for this booking. The description will help you identify multiple bookings."
+            multiline></textarea>
+        <mat-error>
+            @if (form.controls.purpose.errors; as err) {
+            @if (err?.['required']) {
+            <span>*</span>
+            }
+            @if (err?.['minlength']) {
+            <span>Min: {{ err['minlength'].requiredLength }} chars.</span>
+            }
+            @if (err?.['maxlength']) {
+            <span>Max: {{ err['maxlength'].requiredLength }} chars.</span>
+            }
+            }
+        </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Reservation</button>
+</form>

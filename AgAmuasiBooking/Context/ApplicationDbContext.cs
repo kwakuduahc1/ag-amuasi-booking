@@ -17,6 +17,8 @@ namespace AgAmuasiBooking.Context
 
         public virtual DbSet<Services> Services { get; set; }
 
+        public virtual DbSet<ExtraServices> ExtraServices { get; set; }
+
         protected override void OnModelCreating(ModelBuilder mb)
         {
             base.OnModelCreating(mb);

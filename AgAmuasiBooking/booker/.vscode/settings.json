@@ -21,5 +21,12 @@
             "database": "bookings",
             "username": "postgres"
         }
-    ]
+    ],
+    "chat.mcp.serverSampling": {
+        "booker/.vscode/mcp.json: angular-cli": {
+            "allowedModels": [
+                "copilot/auto"
+            ]
+        }
+    }
 }

@@ -1,5 +1,4 @@
-﻿using AgAmuasiBooking.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -76,58 +75,37 @@ namespace AgAmuasiBooking.Models
         public DateTime? DateCancelled { get; set; }
 
         public virtual ICollection<BookingServices>? BookingServices { get; set; }
+
+        public virtual ICollection<ExtraServices>? ExtraServices { get; set; }
     }
 
-    [Index(nameof(ServiceName), IsUnique = true)]
-    public class Services
+    [Index(nameof(BookingsID), [nameof(ServiceName)])]
+    public class ExtraServices
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int ServicesID { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ExtraServicesID { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
         public required string ServiceName { get; set; }
-
-        [Required]
-        [DefaultValue(false)]
-        public bool PerPerson { get; set; }
-
-        public virtual ICollection<ServiceCosts>? ServiceCosts { get; set; }
-
-    }
-
-    public class ServiceCosts
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int ServiceCostsID { get; set; }
-
-        [Required]
-        public int ServicesID { get; set; }
-
-        [Required]
-        [Range(0, double.MaxValue)]
-        public required decimal Cost { get; set; }
-
-        [Required]
-        public required DateTime DateSet { get; set; } = DateTime.UtcNow;
-
-        public virtual Services? Service { get; set; }
-    }
-
-    [Index(nameof(BookingsID), [nameof(ServiceCostsID)])]
-    [Index(nameof(ServiceCostsID), [nameof(BookingsID)])]
-    public class BookingServices
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int BookingServicesID { get; set; }
 
         [Required]
         public Guid BookingsID { get; set; }
 
         [Required]
-        public required int ServiceCostsID { get; set; }
+        public required short Persons {  get; set; }
 
-        public virtual Bookings? Booking { get; set; }
-        public virtual ServiceCosts? ServiceCosts { get; set; }
+        [DefaultValue(0), Range(1, double.MaxValue)]
+        public decimal Cost { get; set; }
+
+        [Required]
+        [StringLength(35, MinimumLength = 3)]
+        public required string Biller { get; set; }
+
+        public DateTime DateBilled { get; set; }
+
+        [DefaultValue(null)]
+        public bool? IsAccepted { get; set; }
+
+        public virtual Bookings? Bookings { get; set; }
     }
 }

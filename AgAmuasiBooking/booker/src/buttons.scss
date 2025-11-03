@@ -555,11 +555,11 @@
         right: var(--ag-spacing-sm);
     }
 
-    // When used as first element (floating independently)
+    // When used in a positioned container
     &:first-child {
-        position: fixed;
-        top: var(--ag-spacing-md);
-        right: var(--ag-spacing-md);
+        position: absolute;
+        top: var(--ag-spacing-sm);
+        right: var(--ag-spacing-sm);
     }
 
     // Icon sizing
